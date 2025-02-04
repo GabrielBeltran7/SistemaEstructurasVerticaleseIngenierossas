@@ -53,7 +53,7 @@ const UploadImages = () => {
     dispatch(imagenurl(uploadedImages));
     Swal.fire({
       icon: "success",
-      title: "Imágenes guardadas en la base de datos exitosamente",
+      title: "Imágenes guardadas en la base de datos. Exitosamente",
       timerProgressBar: true,
       timer: 3000,
     });
@@ -110,7 +110,7 @@ const UploadImages = () => {
   return (
     <Card className={styles.cardContainer}>
       <CardContent>
-        <h2 className={styles.cardTitle}>Subir Imágenes</h2>
+        <h2 className={styles.cardTitle}>Subir un Maximo de 8 Imágenes</h2>
         <div className={styles.inputContainer}>
           <input
             type="file"
@@ -146,7 +146,7 @@ const UploadImages = () => {
         </div>
         <div className={styles.buttonGroup}>
           <CustomButton onClick={handleUpload} disabled={uploading || images.length === 0}>
-            {uploading ? "Subiendo..." : "Guardar Imágenes"}
+            {uploading ? "Subiendo..." : "Guardar Imágenes en la Base de Datos"}
           </CustomButton>
           <CustomButton onClick={handleRemoveAllImages} disabled={images.length === 0}>
             Eliminar Todas las Imágenes

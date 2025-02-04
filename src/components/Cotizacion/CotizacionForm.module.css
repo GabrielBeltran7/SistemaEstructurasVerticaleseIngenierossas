@@ -12,6 +12,14 @@
   border-radius: 10px;
   background-color: #fff;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}.error{
+  color: red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 10px 0;
+  font-weight: bold;
 }
 
 /* Contenedor para los campos alineados en fila (Fecha y Cotización) */

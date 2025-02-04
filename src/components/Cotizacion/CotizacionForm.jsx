@@ -1,11 +1,9 @@
-
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { postCotizacion } from "../../Redux/Actions"; 
 import UploadImages from "../SubirImagenesCloudonary/UploadImages";
 import styles from "./CotizacionForm.module.css";
 
-// Constants for months
 const months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
 const CotizacionForm = () => {
@@ -27,16 +25,18 @@ const CotizacionForm = () => {
     Tiempodeejecucion: "",
     Plazodeejecucion: "",
     CiudaddelCliente: "",
-    imagenes: [] // Store images in an array
+    imagenes: [] 
   };
 
-  const [formData, setFormData] = useState(initialState);
-  const [error, setError] = useState(""); // State for error messages
+  const [formData, setFormData] = useState(() => {
+    const savedData = localStorage.getItem("proposalForm");
+    return savedData ? JSON.parse(savedData) : initialState;
+  });
+
+  const [error, setError] = useState(""); 
 
   useEffect(() => {
-    if (formData) {
-      localStorage.setItem("proposalForm", JSON.stringify(formData));
-    }
+    localStorage.setItem("proposalForm", JSON.stringify(formData));
   }, [formData]);
 
   const handleChange = (e) => {
@@ -55,10 +55,10 @@ const CotizacionForm = () => {
 
     if (urlImagen.length === 0) {
       setError("Debe seleccionar al menos una imagen.");
-      return; // Prevent form submission if no image is selected
+      return; 
     }
 
-    setError(""); // Reset the error message if images are selected
+    setError("");
 
     const formattedData = {
       ...formData,
@@ -66,10 +66,12 @@ const CotizacionForm = () => {
       NombreEmpleado: nombre || "", 
       ApellidoEmpleado: apellidos || "", 
       EmailEmpledado: email || "",
-      imagenes: urlImagen?.map((img) => img?.secure_url) || [], // Map over images to simplify
+      imagenes: urlImagen?.map((img) => img?.secure_url) || [], 
     };
 
     dispatch(postCotizacion(formattedData));
+    
+    // Limpiar formulario y localStorage después del envío exitoso
     setFormData(initialState);
     localStorage.removeItem("proposalForm");
   };
@@ -121,7 +123,7 @@ const CotizacionForm = () => {
         <label>
           <UploadImages />
         </label>
-        {error && <p className={styles.error}>{error}</p>} {/* Show error message */}
+        {error && <p className={styles.error}>{error}</p>}
         <button type="submit" className={styles.button}>Generar Cotización</button>
       </form>
     </div>
@@ -129,6 +131,7 @@ const CotizacionForm = () => {
 };
 
 export default CotizacionForm;
+
 
 
 

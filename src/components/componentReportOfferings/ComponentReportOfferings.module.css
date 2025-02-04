@@ -1,0 +1,56 @@
+/* Estilos base */
+.containerAviso {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.aviso {
+  font-size: 35px;
+  text-align: center;
+  width: 30rem;
+  font-weight: 800;
+  background-color: transparent;
+}.contenedorbotton{
+display: flex;
+ flex-direction: row;
+ justify-content: flex-end;
+}
+
+.botonexcel {
+  display: flex;
+  margin: 10px;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.botonexcel button {
+  background-color: rgb(209, 13, 239);
+  font-size: 20px;
+  border: 2px solid #00f7ff;
+  color: white;
+  border-radius: 10px;
+}
+
+.userName {
+  color: black;
+}
+
+/* Media queries para hacer el diseño responsivo */
+@media screen and (max-width: 768px) {
+  .containerAviso {
+    flex-direction: column;
+  }
+
+  .aviso {
+    width: 100%;
+  }
+
+  .botonexcel {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+}
+

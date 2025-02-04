@@ -1,0 +1,119 @@
+/* Estilo general de la barra de navegación */
+.navcontainer {
+  display: flex;
+  justify-content: space-between; /* Esto asegura que los elementos se alineen entre sí */
+  align-items: center;
+  background-color: #dce3e4; /* Gris suave con un toque de azul */
+  color: #ecf0f1; /* Blanco suave para los enlaces */
+  padding: 10px 20px;
+  height: 60px;
+  margin-bottom: 0.5%;
+}
+
+/* Estilo para el contenedor izquierdo, que incluye el logo y el nombre de la empresa */
+.iconosizquierda {
+  display: flex;
+  align-items: center;
+}
+/* Estilo para el nombre de la empresa */
+.NombreEmpresa {
+  text-decoration: none;
+  color: #2980b9; /* Azul más intenso para el nombre */
+  font-size: 22px;
+  font-weight: 600;
+  transition: color 0.3s, transform 0.3s;
+  cursor: pointer;
+  margin-left: 20px; /* Asegura un pequeño espacio entre el logo y el nombre */
+}
+
+/* Estilo del menú hamburguesa */
+.menuicono {
+  display: none; /* Ocultamos el menú en pantallas grandes */
+  font-size: 30px;
+  cursor: pointer;
+  color: #2980b9; /* Azul más intenso para el icono */
+}
+
+/* Estilo de los enlaces dentro de la barra de navegación */
+.navcontainer a {
+  text-decoration: none;
+  color: #2980b9; /* Azul más intenso para los enlaces */
+  font-size: 18px;
+  margin-right: 20px;
+  font-weight: 600;
+  transition: color 0.3s, transform 0.3s;
+  cursor: pointer;
+}
+
+.navcontainer a:hover {
+  color: #3498db; /* Azul brillante en el hover */
+  transform: scale(1.1);
+}
+
+/* Estilo para la imagen (logo) en la barra de navegación */
+.navcontainer img {
+  display: block;
+  width: 60px;
+  height: auto;
+  border-radius: 50%;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.navcontainer img:hover {
+  box-shadow: 0 0 30px rgba(52, 152, 219, 0.8); /* Sombra azul en hover */
+}
+
+/* Responsividad para pantallas más pequeñas */
+@media screen and (max-width: 768px) {
+  .navcontainer {
+    justify-content: space-between;
+    margin-bottom: 2%;
+  }
+
+  /* Mostrar el ícono del menú de hamburguesa solo en móviles */
+  .menuicono {
+    display: block; 
+  }
+
+  /* Ocultar los enlaces en pantallas móviles hasta que se active el menú */
+  .navcontainer a {
+    display: none;
+  }
+
+  /* Mostrar el menú cuando está activo */
+  .menuicono.active + .linkcontainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #dce3e4; /* Gris suave con un toque de azul */
+    position: absolute;
+    top: 60px;
+    left: 0;
+    margin-left: 1%;
+    border-radius: 10px;
+    width: 100%;
+  }
+
+  /* Estilo para los enlaces cuando el menú está activo */
+  .menuicono.active + .linkcontainer a {
+    display: block;
+    margin: 10px;
+  }
+}
+
+/* Para escritorio, el menú debe ser visible sin necesidad del icono */
+@media screen and (min-width: 769px) {
+  /* Asegura que el icono de menú no se muestre en escritorio */
+  .menuicono {
+    display: none;
+  }
+
+  /* Los enlaces deben ser visibles por defecto en pantallas grandes */
+  .navcontainer a {
+    display: inline-block;
+    color: #2980b9; /* Azul más intenso para los enlaces */
+  }
+}
+
+
+

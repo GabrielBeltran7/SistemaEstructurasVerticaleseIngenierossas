@@ -1,0 +1,93 @@
+/* UploadImages.module.css */
+
+.cardContainer {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}.buttoneliminarimagenes{
+  color: black;
+  background-color: #f2f2f2;
+  font-size: 1.6rem;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto; /* Centrar horizontalmente */
+}
+
+.cardTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #4A4A4A;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.fileInput {
+  display: block;
+  width: 100%;
+  font-size: 0.875rem;
+  color: #4A4A4A;
+  background-color: #f1f5f9;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+.imageGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.imagePreview {
+  position: relative;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.imagePreview img {
+  height: 10rem;
+  width: 100%;
+  object-fit: cover;
+  transition: transform 0.2s ease;
+}
+
+.imagePreview img:hover {
+  transform: scale(1.05);
+}
+
+.button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #3b82f6;
+  color: white;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s ease;
+  text-align: center;
+}
+
+.button:hover {
+  background-color: #2563eb;
+}
+
+.button:disabled {
+  background-color: #93c5fd;
+  cursor: not-allowed;
+}
+
+
+
+

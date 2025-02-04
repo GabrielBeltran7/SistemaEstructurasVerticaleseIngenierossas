@@ -1,0 +1,17 @@
+.backButton{ 
+    border-radius:12px;
+    border: none;
+    background-color: rgb(209, 13, 239);
+    color: white;
+    cursor: pointer;
+    font-size: large;
+    transition: background-color 0.3s ease;
+    justify-content: center;
+    align-content: center;
+    height: 50px;
+    width: 80px;
+    
+
+ }.backButton:hover {
+    background-color: rgba(223, 5, 239, 0.518); /* Cambia el color al hacer hover */
+}

@@ -1,0 +1,117 @@
+/* componentLogin.module.css */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+  color: #fff;
+  font-size: x-large;
+}.div{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  
+
+}.labelTitle {
+  font-size: 2.5rem;
+}
+
+.inputContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  margin-right: 8px;
+  font-size: 1.2em;
+  color:  rgb(30, 112, 220);
+  margin-top: -16px;
+}
+
+.bodyContainer {
+  display: flex;
+  justify-content: flex-start;
+  margin-left: -95%;
+  justify-content: center;
+ 
+}
+.form {
+  width: 100%;
+  max-width: 340px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgb(1, 2, 2);
+  background-color: white;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 1px solid white;
+}
+
+
+.label {
+  margin-bottom: 8px;
+  font-weight: bold;
+  font-size: large;
+}
+
+.contra{
+  margin-bottom: 8px;
+  font-weight: bold;
+  font-size: small;
+  margin-right: 10px;
+  color: black;
+}
+.contraRecuperala {
+  margin-bottom: 8px;
+  font-weight: bold;
+  font-size: large;
+}
+
+.contraRecuperala {
+  font-size: large;
+  color: black;
+}
+
+.contra:hover,
+.contraRecuperala:hover {
+  cursor: pointer;
+}
+
+.input {
+  width: 94%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 2px solid #04cbfc;
+}
+
+.button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 5px;
+  border: none;
+  background-color: #3498db; /* Azul brillante para el botón */
+ 
+  color: #fff;
+  cursor: pointer;
+  font-size: large;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+}
+
+.button:hover {
+  background-color: #2980b9; /* Azul más oscuro al pasar el mouse */
+  transform: scale(1.05); /* Efecto de escala al hacer hover */
+}
+@media screen and (max-width: 600px) {
+  .form {
+    width: 85%;
+  } .bodyContainer {
+    margin-left: -75%;
+    justify-content: center;
+  }
+}

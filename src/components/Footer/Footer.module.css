@@ -1,0 +1,45 @@
+/* Footer.module.css */
+
+.containerprincipal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f2f200; /* Color de fondo del footer */
+  padding: 20px; /* Espacio interno del footer */
+  position: relative; /* Lo hace parte del flujo normal de la página */
+  width: 100%; /* Asegura que ocupe todo el ancho de la pantalla */
+  margin-top: 20px; /* Esto da un pequeño margen superior al footer */
+}
+
+.containerprincipal a {
+  font-size: 2rem; /* Reducido el tamaño de fuente para dispositivos móviles */
+  color: #fff;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+.containerprincipal a:hover {
+  color: rgb(33, 174, 217);
+}
+
+/* Estilos adicionales para dispositivos móviles */
+@media screen and (max-width: 768px) {
+  .containerprincipal {
+    padding: 15px;
+  }
+
+  .containerprincipal a {
+    font-size: 1.5rem; /* Tamaño de fuente ajustado para dispositivos móviles */
+    margin: 0 8px; /* Reducido el margen entre íconos */
+  }
+}
+
+/* Asegura que el body ocupe al menos toda la pantalla */
+body {
+  min-height: 100vh; /* Asegura que el body ocupe al menos toda la pantalla */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Asegura que el contenido se distribuya bien */
+}
+
+

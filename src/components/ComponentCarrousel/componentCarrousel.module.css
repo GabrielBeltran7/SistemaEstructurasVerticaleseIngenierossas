@@ -1,0 +1,48 @@
+.imageOcho {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imageOcho h3 {
+  font-weight: 800;
+  font-size: 50px;
+  color: orange;
+}
+
+.imageOcho span {
+  font-weight: 300;
+  color: black;
+}
+
+.imageOcho p {
+  font-size: 25px;
+  font-weight: 800;
+  letter-spacing: 15px;
+}
+
+.carrousel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+}
+
+.carrousel img {
+  width: 93%;
+  height: 93%;
+  object-fit: cover; /* Ajusta la imagen para cubrir completamente el contenedor */
+  display: block;
+  margin: 0 auto;
+  border-radius: 20px;
+}
+
+@media screen and (max-width: 600px) {
+  .carrousel img {
+    width: 95%;
+    height: auto;
+    border-radius: 10px;
+  }
+}
+
+

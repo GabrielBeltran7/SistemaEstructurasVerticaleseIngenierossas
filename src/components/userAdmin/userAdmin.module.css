@@ -1,0 +1,60 @@
+/* Estilos base */
+.containerAviso {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}.containerboton{
+  display: flex;
+ flex-direction: row;
+ justify-content: flex-end;
+}
+
+.aviso {
+  font-size: 35px;
+  text-align: center;
+  width: 30rem;
+  font-weight: 800;
+  background-color: transparent;
+}
+
+.botonexcel {
+  display: flex;
+  margin: 10px;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.botonexcel button {
+  padding: 6px;
+  background-color: #3498db; /* Azul brillante para el botón */    
+  font-size: 20px;
+
+  color: white;
+  border-radius: 5px;
+}.botonexcel:hover{
+  background-color: #258ed3; /* Azul brillante para el botón */
+  transform: scale(1.05);
+}
+
+.userName {
+  color: black;
+}
+
+/* Media queries para hacer el diseño responsivo */
+@media screen and (max-width: 768px) {
+  .containerAviso {
+    flex-direction: column;
+  }
+
+  .aviso {
+    width: 100%;
+  }
+
+  .botonexcel {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+}
+

@@ -1,0 +1,5 @@
+export const GET_ALLUSER = "GET_ALLUSER"
+export const GET_USER_BY_EMAIL = "GET_USER_BY_EMAIL"
+export const RESET_STATE = "RESET_STATE"
+export const GET_OFFERING = "GET_OFFERING"
+export const POTS_URL_IMAGEN = "POTS_URL_IMAGEN"

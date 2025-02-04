@@ -1,0 +1,118 @@
+/* ProposalForm.module.css */
+
+/* Contenedor principal del formulario */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 30px;
+  border: 1px solid #e2e2e2;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Contenedor para los campos alineados en fila (Fecha y Cotización) */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Estilo para las etiquetas */
+.label {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+  display: block;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+
+/* Estilos para los campos de entrada */
+.input, .textarea {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #333;
+  background-color: #f9f9f9;
+  width: 100%;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+/* Estilo para los campos de texto más grandes (textarea) */
+.textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* Estilo para los campos obligatorios */
+.input[required], .textarea[required] {
+  border-color: #0062cc;
+}
+
+/* Estilo para los campos al recibir focus */
+.input:focus, .textarea:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+  outline: none;
+}
+
+/* Estilo para el botón de enviar */
+.button {
+  padding: 14px 20px;
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.button:active {
+  background-color: #004085;
+  transform: translateY(1px);
+}
+
+/* Espaciado entre campos */
+.form label,
+.form input,
+.form textarea,
+.form button {
+  margin-bottom: 20px;
+}
+
+/* Media query para pantallas pequeñas (móviles) */
+@media (max-width: 768px) {
+  .input, .textarea {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .row {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .button {
+    padding: 12px 15px;
+    font-size: 14px;
+  }
+}
+
+  

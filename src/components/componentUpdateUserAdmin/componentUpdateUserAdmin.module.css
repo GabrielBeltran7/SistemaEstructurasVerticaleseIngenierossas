@@ -1,0 +1,189 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 10%;
+  padding: 30px; /* Espaciado general para un efecto más aireado */
+
+}
+
+.form {
+  width: 100%;
+  max-width: 500px;
+  padding: 30px;
+  border-radius: 12px; /* Bordes más redondeados para un look más moderno */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15); /* Sombra más sutil */
+  background-color: #fff;
+  border: 1px solid #e0e0e0; /* Gris claro para bordes */
+  height: auto;
+  transition: box-shadow 0.3s ease-in-out; /* Efecto de hover para la caja */
+  margin-top: 2rem;
+  
+
+}
+
+.form:hover {
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2); /* Sombra más fuerte al pasar el mouse */
+}
+
+.labelTitle {
+  
+  font-size: 2rem;
+ margin-top: 3rem;
+  color: whitesmoke; /* Gris oscuro profesional para el título */
+  text-align: center; /* Centrado para mayor equilibrio */
+}
+
+.buttoncontainer {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  justify-content: center;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  color:black;
+  font-size: 1rem;
+  
+  
+}
+
+.input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 0.01px solid #04cbfc;
+  box-sizing: border-box;
+  font-size: 1rem;
+  color: black; /* Gris oscuro para mejor contraste */
+  transition: border-color 0.3s ease;
+}
+
+.input:focus {
+  border-color: #3498db; /* Azul brillante al enfocar */
+  outline: none; /* Eliminar el contorno por defecto */
+}
+
+.div {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.inputdiv {
+  width: 15.5rem;
+  padding: 12px;
+  border-radius: 8px;
+  border: 0.01px solid #04cbfc;
+  box-sizing: border-box;
+  color: black;
+  font-size: 1rem;
+}
+
+.divdate {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.inputdate {
+  width: 15.5rem;
+  padding: 12px;
+  border-radius: 8px;
+  border: 0.01px solid #04cbfc;
+  box-sizing: border-box;
+}
+
+.icon {
+  margin-right: 8px;
+  font-size: 1.2em;
+  color: #e74c3c; /* Rojo suave para el icono */
+  margin-top: -16px;
+}
+
+.button {
+  width: 160px;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background-color: #3498db; /* Azul brillante para el botón */
+  color: #fff;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.button:hover {
+  background-color: #2980b9; /* Azul más oscuro al pasar el mouse */
+  transform: scale(1.05); /* Efecto de escala al hacer hover */
+}
+
+.bodyContainer {
+  display: flex;
+  justify-content: center;
+  margin-left: -95%;
+ 
+}
+
+.labelerror {
+  color: #e74c3c; /* Rojo para los mensajes de error */
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+  .form {
+    width: 73%;
+    padding: 50px;
+  }
+
+  .bodyContainer {
+    margin-left: -75%;
+    justify-content: center;
+  }
+
+  .div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .inputdiv, .inputdate, .input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 0.01px solid #04cbfc;
+    box-sizing: border-box;
+  }
+
+  .labelTitle {
+    font-size: 1.5rem;
+    color: whitesmoke; /* Gris oscuro para el título en pantallas pequeñas */
+  }
+  .button {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    background-color: #3498db; /* Azul brillante para el botón */   
+     border-radius: 5px;
+  }
+
+  .button:hover {
+    background-color: #258ed3; /* Azul brillante para el botón */
+    transform: scale(1.05);
+  }.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    padding: 0px; /* Espaciado general para un efecto más aireado */
+  }
+}

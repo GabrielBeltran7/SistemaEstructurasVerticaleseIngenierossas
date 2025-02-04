@@ -1,0 +1,22 @@
+.backButton {
+    display: flex;
+    align-items: center;
+    background-color: #3498db; /* Azul brillante para el botón */    
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    left: 6px;
+    position: absolute; /* Asegura que el botón esté posicionado de forma absoluta */
+
+  }
+  
+  .backButton svg {
+    margin-right: 8px; /* Espacio entre el icono y el texto */
+  }.backButton:hover{
+    background-color: #258ed3; /* Azul brillante para el botón */
+    transform: scale(1.05);
+  }
+  

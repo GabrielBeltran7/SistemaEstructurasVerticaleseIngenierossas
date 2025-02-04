@@ -339,10 +339,7 @@ const ReportAllUsers = () => {
         </select>
       ),
     },
-
-
-    
-  ];
+];
   return (
     <div >
       <div className={style.containerboton}>

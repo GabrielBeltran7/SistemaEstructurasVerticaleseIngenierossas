@@ -13,7 +13,7 @@ import ReportAllUsers from "../../components/userAdmin/userAdmin";
 import { useDispatch } from "react-redux";
 
 import { useNavigate, useParams } from "react-router-dom";
-import ComponentReportOfferings from "../../components/componentReportOfferings/ComponentReportOfferings";
+import ComponentReportOfferings from "../../components/componentReportCotizacion/ComponentReportCotizacion";
 const { Header, Sider, Content } = Layout;
 import BackButton from "../../components/backButton/backButton";
 const HomeAdmin = () => {
@@ -63,9 +63,9 @@ const HomeAdmin = () => {
       <BackButton></BackButton>
       </div>
     <Layout >
-        <Sider style={{ background: "rgba(192, 100, 209, 0.835)" }}trigger={null} collapsible collapsed={collapsed}>
+        <Sider style={{ background: "#2c3e50" }}trigger={null} collapsible collapsed={collapsed}>
           <div className="demo-logo-vertical" />
-          <Menu style={{ background: "rgba(192, 100, 209, 0.835)" }}
+          <Menu style={{ background: "#2c3e50" }}
             theme="dark"
             mode="inline"
             defaultSelectedKeys={["1"]}
@@ -73,12 +73,12 @@ const HomeAdmin = () => {
             items={[
               {
                 key: "1",
-                icon: <UserAddOutlined />,
-                label: "Ofrendas",
+                icon: < DollarOutlined/>,
+                label: "Cotizacion",
               },
               {
                 key: "2",
-                icon: <DollarOutlined />,
+                icon: < UserAddOutlined/>,
                 label: "Usuarios",
               },
             ]}

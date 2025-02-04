@@ -12,7 +12,7 @@ const CotizacionForm = () => {
   const urlImagen = useSelector((state) => state.urlimagen);
 
   const initialState = {
-    MombredeCliente: "",
+    NombredeCliente: "",
     CompañiadelCliente: "",
     DirecciondelCliente: "",
     CelulardelCliente: "",
@@ -90,7 +90,7 @@ const CotizacionForm = () => {
           <input type="text" name="CompañiadelCliente" value={formData.CompañiadelCliente} onChange={handleChange} required className={styles.input} />
         </label>
         <label className={styles.label}>Nombre del Representante Legal:
-          <input type="text" name="MombredeCliente" value={formData.MombredeCliente} onChange={handleChange} required className={styles.input} />
+          <input type="text" name="NombredeCliente" value={formData.NombredeCliente} onChange={handleChange} required className={styles.input} />
         </label>
         <label className={styles.label}>Dirección del Cliente:
           <input type="text" name="DirecciondelCliente" value={formData.DirecciondelCliente} onChange={handleChange} required className={styles.input} />

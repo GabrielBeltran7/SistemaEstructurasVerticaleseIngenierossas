@@ -27,11 +27,11 @@ display: flex;
 }
 
 .botonexcel button {
-  background-color: rgb(209, 13, 239);
+  background-color: #3498db; /* Azul brillante para el botón */    
   font-size: 20px;
-  border: 2px solid #00f7ff;
+  
   color: white;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 
 .userName {

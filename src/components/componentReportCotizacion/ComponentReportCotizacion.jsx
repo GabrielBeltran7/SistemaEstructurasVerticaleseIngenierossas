@@ -6,17 +6,19 @@ import { useDispatch, useSelector } from "react-redux";
 import * as XLSX from "xlsx";
 import moment from "moment";
 import Swal from "sweetalert2";
-import { getReportOffering, getFilterporFecha } from "../../Redux/Actions";
-import style from "./ComponentReportOfferings.module.css";
+import { getReportCotizaciones, getFilterporFecha } from "../../Redux/Actions";
+import style from "./ComponentReportCotizacion.module.css";
 import { useNavigate } from "react-router-dom";
 
-const ComponentReportOfferings = () => {
+const ComponentReportCotizacion = () => {
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const [totalAmount, setTotalAmount] = useState(0);
   const searchInput = useRef(null);
   const navigate = useNavigate();
-  const offering = useSelector((state) => state.allOffering);
+  const reportecotizaciones = useSelector((state) => state.reportecotizaciones);
+  console.log("obteniendo los datos de firebase", reportecotizaciones)
+
 
   const [inputfilter, setInputFilter] = useState({
     fechainicio: "",
@@ -45,21 +47,21 @@ const handleSubmit =(event)=>{
  dispatch(getFilterporFecha(inputfilter))
 }
   useEffect(() => {
-    if (offering) {
-      const total = offering.reduce(
+    if (reportecotizaciones) {
+      const total = reportecotizaciones.reduce(
         (acc, item) => acc + parseFloat(item.cantidadofrendada || 0),
         0
       );
       setTotalAmount(total);
     }
-  }, [offering]);
+  }, [reportecotizaciones]);
 
-  if (offering) {
-    offering.forEach((offering) => {
-      offering.createdAt = moment(offering.createdAt).format(
+  if (reportecotizaciones) {
+    reportecotizaciones.forEach((reportecotizaciones) => {
+      reportecotizaciones.createdAt = moment(reportecotizaciones.createdAt).format(
         "YYYY-MM-DD HH:mm:ss"
       );
-      offering.updatedAt = moment(offering.updatedAt).format(
+      reportecotizaciones.updatedAt = moment(reportecotizaciones.updatedAt).format(
         "YYYY-MM-DD HH:mm:ss"
       );
     });
@@ -68,19 +70,19 @@ const handleSubmit =(event)=>{
   const dispatch = useDispatch();
 
   const exportToExcel = () => {
-    const ws = XLSX.utils.json_to_sheet(offering);
+    const ws = XLSX.utils.json_to_sheet(reportecotizaciones);
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "offering");
-    XLSX.writeFile(wb, "offering.xlsx");
+    XLSX.utils.book_append_sheet(wb, ws, "reportecotizaciones");
+    XLSX.writeFile(wb, "reportecotizaciones.xlsx");
   };
 
   useEffect(() => {
-    dispatch(getReportOffering());
+    dispatch(getReportCotizaciones());
   }, [dispatch]);
 
   const HandleUpdate =(event)=>{
     event.preventDefault()
-    dispatch(getReportOffering());
+    dispatch(getReportCotizaciones());
   }
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -213,11 +215,12 @@ const handleSubmit =(event)=>{
   });
 
   const columns = [
+
     {
-      title: "Nombre",
-      dataIndex: "nombre",
-      key: "nombre",
-      ...getColumnSearchProps("nombre"),
+      title: "Nombre Empresa",
+      dataIndex: "CompañiadelCliente",
+      key: "CompañiadelCliente",
+      ...getColumnSearchProps("CompañiadelCliente"),
       render: (text, record) =>
         text === "Anonimo" ? (
           <span>{text}</span>
@@ -226,34 +229,48 @@ const handleSubmit =(event)=>{
         ),
     },
     {
-      title: "Apellido",
-      dataIndex: "apellidos",
-      key: "apellidos",
-      ...getColumnSearchProps("apellidos"),
+      title: "Numero Cotizacion",
+      dataIndex: "Numerocotizacion",
+      key: "Numerocotizacion",
+      ...getColumnSearchProps("Numerocotizacion"),
+    },
+ 
+    {
+      title: "Fecha  Cotizacion",
+      dataIndex: "date",
+      key: "date",
+      ...getColumnSearchProps("date"),
     },
     {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
-      ...getColumnSearchProps("email"),
+      title: "Nombre de Cliente",
+      dataIndex: "NombredeCliente",
+      key: "NombredeCliente",
+      ...getColumnSearchProps("NombredeCliente"),
     },
     {
-      title: "Fecha de Ofrenda",
-      dataIndex: "fechadeofrenda",
-      key: "fechadeofrenda",
-      ...getColumnSearchProps("fechadeofrenda"),
+      title: "Rerefencia",
+      dataIndex: "referencia",
+      key: "referencia",
+      ...getColumnSearchProps("referencia"),
     },
     {
-      title: "Tipo de Ofrenda",
-      dataIndex: "tipodeofrenda",
-      key: "tipodeofrenda",
-      ...getColumnSearchProps("tipodeofrenda"),
+      title: "Ciudad del Cliente",
+      dataIndex: "CiudaddelCliente",
+      key: "CiudaddelCliente",
+      ...getColumnSearchProps("CiudaddelCliente"),
+    },
+   
+    {
+      title: "Celular del Cliente",
+      dataIndex: "CelulardelCliente",
+      key: "CelulardelCliente",
+      ...getColumnSearchProps("CelulardelCliente"),
     },
     {
-      title: "Cantidad Ofrendada",
-      dataIndex: "cantidadofrendada",
-      key: "cantidadofrendada",
-      ...getColumnSearchProps("cantidadofrendada"),
+      title: "Valor",
+      dataIndex: "monto",
+      key: "monto",
+      ...getColumnSearchProps("monto"),
       render: (text) => <span>$ {text}</span>,
     },
   ];
@@ -288,15 +305,13 @@ const handleSubmit =(event)=>{
         <div className={style.botonexcel}>
           <button onClick={HandleUpdate}>Actualizar</button>
         </div>
-        <div className={style.botonexcel}>
-          <button onClick={navigateOfferingsAnonimo}>Ofrenda anónima</button>
-        </div>
+        
         <div className={style.botonexcel}>
           <button onClick={exportToExcel}>Exportar a Excel 📑</button>
         </div>
       </div>
 
-      <Table columns={columns} dataSource={offering} />
+      <Table columns={columns} dataSource={reportecotizaciones} />
       <div>
         <Typography.Title level={4}>
           Total Ofrendas: $ {totalAmount.toFixed(2)}
@@ -309,4 +324,4 @@ const handleSubmit =(event)=>{
   );
 };
 
-export default ComponentReportOfferings;
+export default ComponentReportCotizacion;

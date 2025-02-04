@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { GET_ALLUSER, GET_USER_BY_EMAIL, GET_OFFERING, POTS_URL_IMAGEN} from "./ActionsTypes";
+import { GET_ALLUSER, GET_USER_BY_EMAIL, GET_ALL_COTIZACION, POTS_URL_IMAGEN} from "./ActionsTypes";
 import { db } from "../../api/firebase/FirebaseConfig/FirebaseConfig";
 import { addDoc, collection, getDocs, updateDoc, doc, query, limit, where, orderBy, runTransaction  } from 'firebase/firestore';
 import Swal from "sweetalert2";
@@ -158,29 +158,42 @@ export const getFilterporFecha = (inputfilter) => {
 };
 
 
-export const getReportOffering = () => {
+export const getReportCotizaciones = () => {
   return async (dispatch) => {
     try {
-      const userCollection = collection(db, 'ofrendas');
+      const userCollection = collection(db, "Cotizacion");
+      const q = query(userCollection, limit(100));
 
-      const querySnapshot = await getDocs(query(userCollection, limit(100)));
+      console.log("Consultando datos de Firebase:", q);
 
-      const reportoffering = [];
+      const querySnapshot = await getDocs(q);
+      
+      // Inicializar el arreglo antes del loop
+      const reportecotizaciones = [];
+
       querySnapshot.forEach((doc) => {
-        reportoffering.push({ id: doc.id, ...doc.data() });
+        reportecotizaciones.push({ id: doc.id, ...doc.data() });
       });
+
+      console.log("Datos obtenidos de Firebase:", reportecotizaciones);
 
       dispatch({
-        type: GET_OFFERING,
-        payload: reportoffering,
+        type: "GET_ALL_COTIZACION",
+        payload: reportecotizaciones,
       });
-
-  
     } catch (error) {
-   
+      console.error("Error al obtener los datos:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error al obtener los datos",
+        timerProgressBar: true,
+        timer: 3500,
+      });
     }
   };
 };
+
+
 
 
 export const postOfferings = (offerings) => {

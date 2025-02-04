@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { postCotizacion } from "../../Redux/Actions"; 
@@ -12,32 +13,30 @@ const CotizacionForm = () => {
   const { nombre, apellidos, email } = useSelector((state) => state.UserProfileByEmail);
   const urlImagen = useSelector((state) => state.urlimagen);
 
-  // Try to load data from localStorage when the component mounts
-  const storedData = JSON.parse(localStorage.getItem("proposalForm")) || {};
-
   const initialState = {
-    MombredeCliente: storedData.MombredeCliente || "",
-    CompañiadelCliente: storedData.CompañiadelCliente || "",
-    DirecciondelCliente: storedData.DirecciondelCliente || "",
-    CelulardelCliente: storedData.CelulardelCliente || "",
-    EmaildelCliente: storedData.EmaildelCliente || "",
-    DetalledelServicio: storedData.DetalledelServicio || "",
-    monto: storedData.monto || "",
-    date: storedData.date || "",
-    referencia: storedData.referencia || "",
-    objetivo: storedData.objetivo || "",
-    Tiempodeejecucion: storedData.Tiempodeejecucion || "",
-    Plazodeejecucion: storedData.Plazodeejecucion || "",
-    CiudaddelCliente: storedData.CiudaddelCliente || "",
-    imagenes: storedData.imagenes || [], // Get images from localStorage
+    MombredeCliente: "",
+    CompañiadelCliente: "",
+    DirecciondelCliente: "",
+    CelulardelCliente: "",
+    EmaildelCliente: "",
+    DetalledelServicio: "",
+    monto: "",
+    date: "",
+    referencia: "",
+    objetivo: "",
+    Tiempodeejecucion: "",
+    Plazodeejecucion: "",
+    CiudaddelCliente: "",
+    imagenes: [] // Store images in an array
   };
 
   const [formData, setFormData] = useState(initialState);
   const [error, setError] = useState(""); // State for error messages
 
-  // Save formData and images to localStorage on change
   useEffect(() => {
-    localStorage.setItem("proposalForm", JSON.stringify(formData));
+    if (formData) {
+      localStorage.setItem("proposalForm", JSON.stringify(formData));
+    }
   }, [formData]);
 
   const handleChange = (e) => {
@@ -71,8 +70,6 @@ const CotizacionForm = () => {
     };
 
     dispatch(postCotizacion(formattedData));
-
-    // Reset form and localStorage after successful form submission
     setFormData(initialState);
     localStorage.removeItem("proposalForm");
   };

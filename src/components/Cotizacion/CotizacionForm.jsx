@@ -25,7 +25,8 @@ const CotizacionForm = () => {
     Tiempodeejecucion: "",
     Plazodeejecucion: "",
     CiudaddelCliente: "",
-    imagenes: [] 
+    imagenes: [],
+    
   };
 
   const [formData, setFormData] = useState(() => {
@@ -66,6 +67,7 @@ const CotizacionForm = () => {
       NombreEmpleado: nombre || "", 
       ApellidoEmpleado: apellidos || "", 
       EmailEmpledado: email || "",
+      estado: "pendiente",
       imagenes: urlImagen?.map((img) => img?.secure_url) || [], 
     };
 

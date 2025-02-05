@@ -22,7 +22,7 @@ const CotizacionForm = () => {
     date: "",
     referencia: "",
     objetivo: "",
-    Tiempodeejecucion: "",
+    LugardeEjecucion: "",
     Plazodeejecucion: "",
     CiudaddelCliente: "",
     imagenes: [],
@@ -113,10 +113,10 @@ const CotizacionForm = () => {
         <label className={styles.label}>Actividades a Desarrollar:
           <textarea name="DetalledelServicio" value={formData.DetalledelServicio} onChange={handleChange} required className={styles.textarea} />
         </label>
-        <label className={styles.label}>Plazo de Ejecución:
-          <textarea name="Tiempodeejecucion" value={formData.Tiempodeejecucion} onChange={handleChange} required className={styles.textarea} />
+        <label className={styles.label}>Lugar de Ejecucion:
+          <textarea name="LugardeEjecucion" value={formData.CompañiadelCliente} onChange={handleChange} required className={styles.textarea} />
         </label>
-        <label className={styles.label}>Lugar de Ejecución:
+        <label className={styles.label}>Plazo de Ejecución:
           <textarea name="Plazodeejecucion" value={formData.Plazodeejecucion} onChange={handleChange} required className={styles.textarea} />
         </label>
         <label className={styles.label}>Valor:

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./componentLogin.module.css";
 import { FaSignInAlt, FaUserPlus, FaEnvelope, FaLock } from "react-icons/fa";
-import BackButton from "../backButton/backButton";
+
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../../api/firebase/FirebaseConfig/FirebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -79,9 +79,7 @@ const ComponentLogin = () => {
 
   return (
     <>
-      <div className={styles.bodyContainer}>
-        <BackButton />
-      </div>
+     
       <div className={styles.container}>
         <label className={styles.labelTitle}>Iniciar Sesión</label>
         <form className={styles.form} onSubmit={handleLogin}>

@@ -30,7 +30,7 @@
   transition: background 0.3s, transform 0.2s;
 }
 
-.contenedorbotton button:nth-child(1) { background-color: #27ae60; color: white; }
+.contenedorbotton button:nth-child(1) { background-color: #3498db; color: white; }
 .contenedorbotton button:nth-child(2) { background-color: #e67e22; color: white; }
 .contenedorbotton button:nth-child(3) { background-color: #3498db; color: white; }
 
@@ -46,7 +46,7 @@
 }
 
 .botonexcel button {
-  background-color: #2ecc71;
+  background-color: #2e63cc;
   color: white;
   font-size: 16px;
   padding: 12px 20px;
@@ -57,7 +57,7 @@
 }
 
 .botonexcel button:hover {
-  background-color: #27ae60;
+  background-color:#068ee9;
   transform: scale(1.05);
 }
 

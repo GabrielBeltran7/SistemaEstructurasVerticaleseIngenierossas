@@ -163,9 +163,6 @@ export const getReportCotizaciones = () => {
     try {
       const userCollection = collection(db, "Cotizacion");
       const q = query(userCollection, limit(100));
-
-      console.log("Consultando datos de Firebase:", q);
-
       const querySnapshot = await getDocs(q);
       
       // Inicializar el arreglo antes del loop
@@ -175,7 +172,6 @@ export const getReportCotizaciones = () => {
         reportecotizaciones.push({ id: doc.id, ...doc.data() });
       });
 
-      console.log("Datos obtenidos de Firebase:", reportecotizaciones);
 
       dispatch({
         type: "GET_ALL_COTIZACION",

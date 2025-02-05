@@ -93,11 +93,14 @@ const Navbar = () => {
             Perfil
           </Link>
         ) : null} {/* No mostrar "Perfil" si no está logueado */}
-         {userEmail ? (
-          <Link to="/cotizacion" onClick={closeMenu}>
-            Cotizacion
-          </Link>
-        ) : null} {/* No mostrar "Perfil" si no está logueado */}
+
+
+{userEmail && userByemail.estado === "Habilitado" ? (
+  <Link to="/cotizacion" onClick={closeMenu}>
+    Cotización
+  </Link>
+) : null}
+
 
         {!userEmail ? (
           <Link to="/login" onClick={closeMenu}>

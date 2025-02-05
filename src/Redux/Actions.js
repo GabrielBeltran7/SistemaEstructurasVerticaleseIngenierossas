@@ -313,7 +313,7 @@ export const imagenurl = (urlimagen) => {
 
 
 export const postCotizacion = (cotizacion) => {
-  console.log("xcvvvvvvvvvvvvvvvvvvvvv", cotizacion)
+
   return async (dispatch) => {
     try {
       const userCollection = collection(db, 'Cotizacion');
@@ -339,6 +339,7 @@ export const postCotizacion = (cotizacion) => {
         // Ahora guardamos la nueva cotización en la base de datos
         await addDoc(userCollection, cotizacion);
       });
+     
 
       Swal.fire({
         icon: 'success',
@@ -357,11 +358,6 @@ export const postCotizacion = (cotizacion) => {
     }
   };
 };
-
-
-
-
-
 
 
 export const postProfile = (user) => {
@@ -384,7 +380,7 @@ export const postProfile = (user) => {
         });
         return; // No continuar con el registro
       }
-
+      getUserProfileByEmail(user.email)
       // Si el correo electrónico no está registrado, proceder con el registro
       const newDocRef = await addDoc(userCollection, user);
       Swal.fire({

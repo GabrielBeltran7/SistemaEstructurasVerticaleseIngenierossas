@@ -17,6 +17,7 @@ const ComponentProfile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userByemail = useSelector((state) => state.UserProfileByEmail);
+  console.log("boton guardar", userByemail)
   
 
   const dateUser = auth.currentUser;
@@ -540,13 +541,13 @@ const ComponentProfile = () => {
               </div>
             </div>
 
-            <div className={style.buttoncontainer}>
+            {/* <div className={style.buttoncontainer}>
               <div className={style.inputContainer}>
                 <button type="submit" className={style.button} disabled>
                   Actualizar
                 </button>
               </div>
-            </div>
+            </div> */}
           </form>
         ) : (
           <label className={style.labelerror}>Por Favor Inicia Sesion</label>

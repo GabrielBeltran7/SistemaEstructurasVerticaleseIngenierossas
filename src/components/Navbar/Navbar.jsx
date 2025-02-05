@@ -6,8 +6,6 @@ import { auth } from "../../../api/firebase/FirebaseConfig/FirebaseConfig";
 import { RESET_STATE } from "../../Redux/ActionsTypes";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserProfile, getUserProfileByEmail } from "../../Redux/Actions";
-
-
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
   const userByemail = useSelector((state) => state.UserProfileByEmail);

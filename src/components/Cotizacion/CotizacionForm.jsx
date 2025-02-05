@@ -67,7 +67,7 @@ const CotizacionForm = () => {
       NombreEmpleado: nombre || "", 
       ApellidoEmpleado: apellidos || "", 
       EmailEmpledado: email || "",
-      estado: "pendiente",
+      estado: "Pendiente",
       imagenes: urlImagen?.map((img) => img?.secure_url) || [], 
     };
 

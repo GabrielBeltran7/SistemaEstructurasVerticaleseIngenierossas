@@ -43,7 +43,7 @@ const ComponentProfile = () => {
     userId: userId,
     rol: "Usuario",
     user: "activo",
-    estado:"deshabilitado"
+    estado:"Deshabilitado"
 
   });
 
@@ -103,6 +103,7 @@ const ComponentProfile = () => {
     e.preventDefault();
     dispatch(postProfile(formData));
     dispatch(getUserProfileByEmail(userEmail));
+    navigate("/");
 
     setFormData({
       nombre: "",

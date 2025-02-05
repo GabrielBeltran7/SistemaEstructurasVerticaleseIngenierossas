@@ -380,7 +380,7 @@ export const postProfile = (user) => {
         });
         return; // No continuar con el registro
       }
-      getUserProfileByEmail(user.email)
+      
       // Si el correo electrónico no está registrado, proceder con el registro
       const newDocRef = await addDoc(userCollection, user);
       Swal.fire({

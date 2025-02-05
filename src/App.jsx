@@ -12,9 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../api/firebase/FirebaseConfig/FirebaseConfig.js";
 import { useEffect, useState } from "react";
 import { getUserProfileByEmail, getUserProfile } from "./Redux/Actions.js";
-import ComponentRegisterOfferings from "./components/componentRegisterOfferings/componentRegisterOfferings.jsx";
 import { onAuthStateChanged } from "firebase/auth";
-import ComponentRegisterOfferingsAnonimo from "./components/componentRegisterOfferingsAnonimo/componentRegisterOfferingsAnonimo.jsx";
 import ComponentRegisterSocio from "./components/componentregisterProfile/ComponentRegisterSocio.jsx";
 import ComponentUpdateUserAdmin from "./components/componentUpdateUserAdmin/componentUpdateUserAdmin.jsx";
 import GenerateProposal from "./components/GenerateProposal/GenerateProposal.jsx";
@@ -73,8 +71,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/componentUpdateUserAdmin/:id" element={<ComponentUpdateUserAdmin />} />
-          <Route path="/registeroffering/:id" element={<ComponentRegisterOfferings />} />
-          <Route path="/registerofferinganonimo/" element={<ComponentRegisterOfferingsAnonimo />} />
+          
           <Route path="/profile" element={<ComponentProfile />} />
           <Route path="/passwordrecover" element={<RecoverPassword />} />
           {/* Ruta protegida para HomeAdmin */}

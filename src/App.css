@@ -1,6 +1,10 @@
+:root,
+html,
 body {
   margin: 0;
-  font-family: 'Arial', sans-serif;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden; /* Evita el scroll horizontal */
   background: #2c3e50;
- 
+  
 }

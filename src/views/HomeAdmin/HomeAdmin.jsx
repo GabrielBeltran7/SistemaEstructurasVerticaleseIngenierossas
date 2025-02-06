@@ -11,7 +11,7 @@ import style from "./HomeAdmin.module.css";
 import ReportAllUsers from "../../components/userAdmin/userAdmin";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import ComponentReportOfferings from "../../components/componentReportCotizacion/ComponentReportCotizacion";
+import ComponentReportCotizacion from "../../components/componentReportCotizacion/ComponentReportCotizacion";
 
 
 const { Header, Sider, Content } = Layout;
@@ -48,7 +48,7 @@ const HomeAdmin = () => {
   const renderSelectedComponent = () => {
     switch (selectedItem) {
       case "1":
-        return <ComponentReportOfferings />;
+        return <ComponentReportCotizacion />;
       case "2":
         return <ReportAllUsers />;
       default:

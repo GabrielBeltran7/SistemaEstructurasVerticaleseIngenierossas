@@ -154,7 +154,21 @@ const ReportAllUsers = () => {
   });
 
   const columns = [
-    { title: "Nombre", dataIndex: "nombre", key: "nombre", ...getColumnSearchProps("nombre"), render: (text, record) => (<a href={`/componentUpdateUserAdmin/${record.id}`}>{text}</a>) },
+    { 
+      title: "Nombre", 
+      dataIndex: "nombre", 
+      key: "nombre", 
+      ...getColumnSearchProps("nombre"),
+      onFilter: (value, record) => 
+        record.nombre 
+          ? record.nombre.toString().toLowerCase().includes(value.toLowerCase()) 
+          : false,
+      render: (text, record) => (
+        <a href={`/componentUpdateUserAdmin/${record.id}`}>
+          {text || "Sin Empresa"}
+        </a>
+      ),
+    },
     { title: "Apellido", dataIndex: "apellidos", key: "apellidos", ...getColumnSearchProps("apellidos") },
     { title: "Telefono", dataIndex: "telefono", key: "telefono", ...getColumnSearchProps("telefono") },
     { title: "Direccion", dataIndex: "direccion", key: "direccion", ...getColumnSearchProps("direccion") },

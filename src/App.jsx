@@ -17,6 +17,7 @@ import ComponentRegisterSocio from "./components/componentregisterProfile/Compon
 import ComponentUpdateUserAdmin from "./components/componentUpdateUserAdmin/componentUpdateUserAdmin.jsx";
 import GenerateProposal from "./components/GenerateProposal/GenerateProposal.jsx";
 import CotizacionForm from "./components/Cotizacion/CotizacionForm.jsx";
+import AprobarCotizacionForm from "./components/AprobarCotizacion/AprobarCotizacionForm.jsx";
 
 function App() {
   const dispatch = useDispatch();
@@ -71,6 +72,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/componentUpdateUserAdmin/:id" element={<ComponentUpdateUserAdmin />} />
+          <Route path="/AprobarCotizacion/:id" element={<AprobarCotizacionForm />} />
           
           <Route path="/profile" element={<ComponentProfile />} />
           <Route path="/passwordrecover" element={<RecoverPassword />} />

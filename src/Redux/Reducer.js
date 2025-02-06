@@ -4,29 +4,48 @@ import {
   RESET_STATE,
   GET_ALL_COTIZACION,
   POTS_URL_IMAGEN,
+  UPDATE_COTIZACION_SUCCESS,
+  GET_COTIZACION_SUCCESS
 } from "./ActionsTypes";
 let inicialState = {
   allUsers: [],
   UserProfileByEmail: [],
-  allOffering: [],
+ 
   urlimagen: [],
   reportecotizaciones: [],
+  updatedDataCotizacion:[],
+  cotizacionNumero:[],
 };
 const rootReducer = (state = inicialState, action) => {
   switch (action.type) {
+
+
     case RESET_STATE:
       return inicialState;
+        case GET_COTIZACION_SUCCESS:
+          return {
+            ...state,
+            cotizacionNumero: action.payload,
+          };
+
+
+      case UPDATE_COTIZACION_SUCCESS:
+        return {
+          ...state,
+          updatedDataCotizacion: action.payload,
+        };
 
     case GET_ALLUSER:
       return {
         ...state,
         allUsers: action.payload,
       };
+
+
     case GET_ALL_COTIZACION:
       return {
         ...state,
-
-        reportecotizaciones: action.payload,
+         reportecotizaciones: action.payload,
       };
 
     case GET_USER_BY_EMAIL:

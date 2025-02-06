@@ -38,7 +38,7 @@ const ComponentHome = () => {
           </button>
         </div>
       ) : (
-        <label className={style.label}>Bienvenidos a</label>
+        <label className={style.label}>Bienvenido a</label>
       )}
 
       <label className={style.label}>

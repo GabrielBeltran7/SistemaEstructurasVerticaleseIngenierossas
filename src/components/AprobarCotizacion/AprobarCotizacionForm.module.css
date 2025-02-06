@@ -1,0 +1,226 @@
+/* ProposalForm.module.css */
+
+/* Contenedor principal del formulario */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 30px;
+  border: 1px solid #e2e2e2;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}.error{
+  color: red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+
+/* Contenedor para los campos alineados en fila (Fecha y Cotización) */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Estilo para las etiquetas */
+.label {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+  display: block;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+
+/* Estilos para los campos de entrada */
+.input, .textarea {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #333;
+  background-color: #f9f9f9;
+  width: 100%;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+/* Estilo para los campos de texto más grandes (textarea) */
+.textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* Estilo para los campos obligatorios */
+.input[required], .textarea[required] {
+  border-color: #0062cc;
+}
+
+/* Estilo para los campos al recibir focus */
+.input:focus, .textarea:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+  outline: none;
+}
+
+/* Estilo para el botón de enviar */
+.button {
+  padding: 14px 20px;
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.button:active {
+  background-color: #004085;
+  transform: translateY(1px);
+}
+
+/* Espaciado entre campos */
+.form label,
+.form input,
+.form textarea,
+.form button {
+  margin-bottom: 20px;
+}
+
+
+
+
+.imageContainer {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.imageGrid {
+  display: grid;
+  gap: 15px;
+  justify-content: center;
+  grid-template-columns: repeat(2, 1fr); /* 2 columnas en móvil */
+}
+
+
+
+.imageItem {
+  width: 100%;
+  max-width: 150px;
+  height: 150px;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease-in-out;
+}
+
+.imageItem:hover {
+  transform: scale(1.1);
+}
+
+.imageItem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}/* Asegúrate de que los checkboxes sean visibles */
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+.checkboxText {
+  margin-left: 5px;
+  font-size: 14px;
+}.input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px; /* Añade un margen para separar el checkbox del texto */
+  transform: scale(1.5); /* Opcional: cambia el tamaño si está demasiado pequeño */
+}.select-wrapper {
+  position: relative;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.select {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  appearance: none;
+  background-color: transparent;
+  color: #333;
+  z-index: 2;
+  position: relative;
+  outline: none;
+  cursor: pointer;
+}
+
+.select.pending {
+  background-color: #f8d7da;
+  border: 1px solid #dc3545;
+  color: #dc3545;
+}
+
+.select.approved {
+  background-color: #d4edda;
+  border: 1px solid #28a745;
+  color: #28a745;
+}.laberestadocotizacion{
+  display: flex; 
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente (si tiene altura definida) */
+  color: black;
+  font-size: 1.3rem;
+  text-align: center; /* Para centrar texto en caso de elementos inline */
+  height: 100%; /* Asegura que tenga altura si está dentro de un contenedor flex */
+  width: 100%; /* Si necesitas que ocupe todo el ancho */
+}
+
+/* Triángulo indicador */
+.select-wrapper::after {
+  content: "▼";
+  font-size: 12px;
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #999;
+}@media (min-width: 768px) {
+  .imageGrid {
+    grid-template-columns: repeat(4, 1fr); /* 4 columnas en pantallas grandes */
+  }.laberestadocotizacion{
+    display: flex; 
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente (si tiene altura definida) */
+    color: black;
+    font-size: 2rem;
+    height: 100%; /* Asegura que tenga altura si está dentro de un contenedor flex */
+    width: 100%; /* Si necesitas que ocupe todo el ancho */
+  }
+ 
+}

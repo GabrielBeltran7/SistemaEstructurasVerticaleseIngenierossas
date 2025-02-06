@@ -72,7 +72,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/componentUpdateUserAdmin/:id" element={<ComponentUpdateUserAdmin />} />
-          <Route path="/AprobarCotizacion/:id" element={<AprobarCotizacionForm />} />
+         
           
           <Route path="/profile" element={<ComponentProfile />} />
           <Route path="/passwordrecover" element={<RecoverPassword />} />
@@ -85,11 +85,15 @@ function App() {
               path="/cotizacion"
               element={userByemail?.estado === "Habilitado" ? <CotizacionForm /> : <Home />}
               />
+
+
+               <Route path="/AprobarCotizacion/:id"
+                element={userByemail.rol === "Administrador" ? <AprobarCotizacionForm /> :<Home />} />
               <Route
               path="/generarpdf"
-            element={
-            userByemail?.rol === "Administrador" ? <GenerateProposal /> : <Home />
-  }
+              element={
+              userByemail?.rol === "Administrador" ? <GenerateProposal /> : <Home />
+                }
 />
         </Routes>
         

@@ -66,7 +66,7 @@ export const updateCotizacion = (cotizacion) => {
         throw new Error("El ID de la cotización debe ser un número válido.");
       }
 
-      console.log("Validando actualización en updateCotizacion:", cotizacion);
+      
 
       // Realizar una consulta para buscar el documento usando Numerocotizacion
       const cotizacionRef = collection(db, "Cotizacion");
@@ -103,7 +103,7 @@ export const updateCotizacion = (cotizacion) => {
           timerProgressBar: true,
           timer: 2000,
         });
-        getReportCotizaciones()
+        
        
       } else {
         // Si no encontramos el documento con el Numerocotizacion proporcionado

@@ -198,6 +198,16 @@
   text-align: center; /* Para centrar texto en caso de elementos inline */
   height: 100%; /* Asegura que tenga altura si está dentro de un contenedor flex */
   width: 100%; /* Si necesitas que ocupe todo el ancho */
+}.generarCotizacion{
+  display: table-column; 
+  
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente (si tiene altura definida) */
+  background-color: white;
+  font-size: 1.6rem;
+  text-align: center; /* Para centrar texto en caso de elementos inline */
+  height: 100%; /* Asegura que tenga altura si está dentro de un contenedor flex */
+  width: 100%; /* Si necesitas que ocupe todo el ancho */
 }
 
 /* Triángulo indicador */

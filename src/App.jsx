@@ -85,6 +85,12 @@ function App() {
               path="/cotizacion"
               element={userByemail?.estado === "Habilitado" ? <CotizacionForm /> : <Home />}
               />
+              <Route
+              path="/generarpdf"
+            element={
+            userByemail?.rol === "Administrador" ? <GenerateProposal /> : <Home />
+  }
+/>
         </Routes>
         
 

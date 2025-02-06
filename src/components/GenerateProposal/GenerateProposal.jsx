@@ -11,6 +11,7 @@ import {
 } from "@react-pdf/renderer";
 
 const ProposalDocument = ({ proposalData }) => {
+
   const styles = StyleSheet.create({
     page: {
       flexDirection: "column",
@@ -131,40 +132,40 @@ const ProposalDocument = ({ proposalData }) => {
               Bogotá D.C: {proposalData.date}
             </Text>
             <Text style={styles.encabezadotext}>
-              Cotización: {proposalData.quote}
+              Cotización: {proposalData.Numerocotizacion}
             </Text>
           </View>
           <View style={styles.container}>
             <Text style={styles.encabezadotext}>Sres./Sras: </Text>
-            <Text style={styles.encabezadotext}>{proposalData.clientCompany}</Text>
-            <Text style={styles.encabezadotext}>{proposalData.clientName}</Text>
-            <Text style={styles.encabezadotext}>{proposalData.clientAddress}</Text>
+            <Text style={styles.encabezadotext}>{proposalData.CompañiadelCliente}</Text>
+            <Text style={styles.encabezadotext}>{proposalData.NombredeCliente}</Text>
+            <Text style={styles.encabezadotext}>{proposalData.DirecciondelCliente}</Text>
             <Text style={styles.encabezadotext}>
-              {proposalData.clientPhone}
+              {proposalData.CelulardelCliente}
             </Text>
             <Text style={styles.encabezadotext}>
-              {proposalData.clientEmail}
+              {proposalData.EmaildelCliente}
             </Text>
-            <Text style={styles.encabezadotext}>{proposalData.clientCity}</Text>
+            <Text style={styles.encabezadotext}>{proposalData.CiudaddelCliente}</Text>
           </View>
 
           <View style={styles.container}>
             <Text>
-              <Text style={styles.title}>Ref: </Text>
-              <Text style={styles.text}>{proposalData.ref}</Text>
+              <Text style={styles.title}>Referencia: </Text>
+              <Text style={styles.text}>{proposalData.referencia}</Text>
               <Text style={styles.text}></Text>
             </Text>
             <View style={{ marginTop: 12 }}>
               <Text>
                 <Text style={styles.title}>OBJETIVO DE LA PROPUESTA: </Text>
-                <Text style={styles.text}>{proposalData.objective}</Text>
+                <Text style={styles.text}>{proposalData.objetivo}</Text>
               </Text>
             </View>
             <View style={{ marginTop: 12 }}>
               <Text>
                 <Text style={styles.title}>LUGAR DE EJECUCIÓN:  </Text>
                 <Text style={styles.text}>La ejecución de este proyecto se realizara en las instalaciones de </Text>
-                <Text style={styles.text}>{proposalData.clientCompany}</Text>
+                <Text style={styles.text}>{proposalData.LugardeEjecucion}</Text>
               </Text>
             </View>
           </View>
@@ -183,20 +184,20 @@ const ProposalDocument = ({ proposalData }) => {
                 ACTIVIDADES A DESARROLLAR:{"\n\n"}
               </Text>
               <View style={{ marginTop: 8 }}>
-                <Text style={styles.text}>{proposalData.serviceDetails}</Text>
+                <Text style={styles.text}>{proposalData.DetalledelServicio}</Text>
               </View>
             </Text>
             <View style={{ marginTop: 12 }}>
               <Text>
                 <Text style={styles.title}>PLAZO DE EJECUCIÓN: </Text>
-                <Text style={styles.text}>{proposalData.executionTime}</Text>
+                <Text style={styles.text}>{proposalData.Plazodeejecucion}</Text>
               </Text>
             </View>
 
             <View style={{ marginTop: 12 }}>
               <Text>
                 <Text style={styles.title}>VALOR: $ </Text>
-                <Text style={styles.text}>{proposalData.amount}</Text>
+                <Text style={styles.text}>{proposalData.monto}</Text>
               </Text>
             </View>
           </View>
@@ -343,19 +344,34 @@ const handleReload = () => {
 const GenerateProposal = ({ proposalData }) => {
   return (
     <>
-    <div className="flex justify-center items-center py-4">
-      <PDFDownloadLink
-        document={<ProposalDocument proposalData={proposalData} />}
-        fileName="Propuesta_Comercial.pdf"
-      >
-        {({ loading }) => (loading ? "Generando PDF..." : "Descargar PDF")}
-      </PDFDownloadLink>
-      
-    </div>
-    <button onClick={handleReload} >
-        Actualizar Página
-      </button>
-    </>
+    
+  <div style={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "1rem" }}>
+    <PDFDownloadLink
+      document={<ProposalDocument proposalData={proposalData} />}
+      fileName="Propuesta_Comercial.pdf"
+    >
+      {({ loading }) => (loading ? "Generando PDF..." : "Descargar PDF")}
+    </PDFDownloadLink>
+  </div>
+
+  <label style={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "1rem" }}>
+    <button
+      onClick={handleReload}
+      style={{
+        padding: "0.5rem 1rem",
+        backgroundColor: "#0064ff",
+        color: "white",
+        border: "none",
+        borderRadius: "4px",
+        cursor: "pointer",
+        fontSize: "16px",
+      }}
+    >
+      Actualizar Página
+    </button>
+  </label>
+</>
+
   );
 };
 

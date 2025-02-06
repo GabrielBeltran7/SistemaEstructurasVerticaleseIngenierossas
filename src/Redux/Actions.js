@@ -53,7 +53,6 @@ export const getCotizacionByNumero = (id) => {
   };
 };
 
-
 export const updateCotizacion = (cotizacion) => {
   return async (dispatch) => {
     try {

@@ -6,8 +6,9 @@
   background-color: #dce3e4; /* Gris suave con un toque de azul */
   color: #ecf0f1; /* Blanco suave para los enlaces */
   padding: 10px 20px;
-  height: 60px;
+  height: 50px;
   margin-bottom: 0.5%;
+  width: 100%;
 }
 
 /* Estilo para el contenedor izquierdo, que incluye el logo y el nombre de la empresa */

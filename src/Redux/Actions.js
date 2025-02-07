@@ -1,12 +1,14 @@
 /* eslint-disable no-unused-vars */
-import { GET_ALLUSER, GET_USER_BY_EMAIL, GET_ALL_COTIZACION, GET_COTIZACION_SUCCESS, POTS_URL_IMAGEN, UPDATE_COTIZACION_SUCCESS} from "./ActionsTypes";
+import { GET_ALLUSER, GET_USER_BY_EMAIL, GET_ALL_COTIZACION, GET_COTIZACION_SUCCESS, POTS_URL_IMAGEN, UPDATE_COTIZACION_SUCCESS, RESET_REPORT_COTIZACIONES} from "./ActionsTypes";
 import { db } from "../../api/firebase/FirebaseConfig/FirebaseConfig";
 import { addDoc, collection, getDocs, updateDoc, doc, query, limit, where, orderBy, runTransaction  } from 'firebase/firestore';
 import Swal from "sweetalert2";
 
 
 
-
+export const resetReportCotizaciones = () => ({
+  type: RESET_REPORT_COTIZACIONES,
+});
 
 
 export const getCotizacionByNumero = (id) => {
@@ -77,6 +79,7 @@ export const updateCotizacion = (cotizacion) => {
         // Si encontramos el documento, actualizamos
         const docRef = querySnapshot.docs[0].ref;
         const updatedDataCotizacion = {
+          EmailAdministrador: cotizacion.EmailAdministrador,
           NombredeCliente: cotizacion.NombredeCliente,
           CompañiadelCliente: cotizacion.CompañiadelCliente,
           DirecciondelCliente: cotizacion.DirecciondelCliente,
@@ -236,29 +239,30 @@ export const apdateRoluser = (inputs) => {
 
 
 export const getFilterporFecha = (inputfilter) => {
+  console.log("1111111111111111111", inputfilter)
   
   return async (dispatch) => {
     try {
       const fechainicio = inputfilter.fechainicio
       const fechafin = inputfilter.fechafin
      
-      const userCollection = collection(db, 'ofrendas');
+      const userCollection = collection(db, 'Cotizacion');
  
       // Crea una consulta usando las fechas
       const dateFilter = query(
         userCollection,
-        where('fechadeofrenda', '>=', fechainicio),
-        where('fechadeofrenda', '<=', fechafin),
+        where('date', '>=', fechainicio),
+        where('date', '<=', fechafin),
         limit(100)
       );
 
       const querySnapshot = await getDocs(dateFilter);
 
-      const reportoffering = [];
+      const filtrofechacotizacion = [];
       querySnapshot.forEach((doc) => {
-        reportoffering.push({ id: doc.id, ...doc.data() });
+        filtrofechacotizacion.push({ id: doc.id, ...doc.data() });
       });
-     if(reportoffering.length ===0){
+     if(filtrofechacotizacion.length ===0){
 
       Swal.fire({
         icon: 'error',
@@ -269,8 +273,8 @@ export const getFilterporFecha = (inputfilter) => {
      }
 
       dispatch({
-        type: GET_OFFERING,
-        payload: reportoffering,
+        type: GET_ALL_COTIZACION,
+        payload: filtrofechacotizacion,
       });
     } catch (error) {
       // Maneja los errores de manera adecuada, por ejemplo, puedes enviarlos a un servicio de registro de errores o mostrar un mensaje al usuario.
@@ -294,11 +298,12 @@ export const getReportCotizaciones = () => {
         reportecotizaciones.push({ id: doc.id, ...doc.data() });
       });
 
-
+     
       dispatch({
         type: GET_ALL_COTIZACION,
         payload: reportecotizaciones,
       });
+     
     } catch (error) {
       console.error("Error al obtener los datos:", error);
       Swal.fire({

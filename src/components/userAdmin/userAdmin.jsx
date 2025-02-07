@@ -177,7 +177,7 @@ const ReportAllUsers = () => {
     { title: "Titulo Academico", dataIndex: "educacion", key: "educacion", ...getColumnSearchProps("educacion") },
     { title: "N° Targeta Proesional", dataIndex: "numerotarjetaprofesional", key: "numerotarjetaprofesional", ...getColumnSearchProps("numerotarjetaprofesional") },
     { title: "Cargo", dataIndex: "cargo", key: "cargo", ...getColumnSearchProps("cargo") },
-    { title: "Fecha Afiliacion", dataIndex: "fechaAfiliacion", key: "fechaAfiliacion", ...getColumnSearchProps("fechaAfiliacion") },
+    { title: "Fecha Ingreso", dataIndex: "fechaAfiliacion", key: "fechaAfiliacion", ...getColumnSearchProps("fechaAfiliacion") },
     { title: "Fecha Nacimiento", dataIndex: "fechaNacimiento", key: "fechaNacimiento", ...getColumnSearchProps("fechaNacimiento") },
     { title: "Rol", dataIndex: "rol", key: "rol", render: (text, record) => (
         <select

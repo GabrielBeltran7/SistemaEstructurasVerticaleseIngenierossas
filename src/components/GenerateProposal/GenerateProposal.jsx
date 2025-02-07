@@ -12,6 +12,72 @@ import {
 
 const ProposalDocument = ({ proposalData }) => {
 
+  const numberToWords = (num) => { 
+    const ones = [
+      'cero', 'uno', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve', 'diez', 'once', 'doce', 'trece', 'catorce', 'quince',
+      'dieciséis', 'diecisiete', 'dieciocho', 'diecinueve', 'veinte'
+    ];
+    const tens = ['', '', 'veinte', 'treinta', 'cuarenta', 'cincuenta', 'sesenta', 'setenta', 'ochenta', 'noventa'];
+    const hundreds = ['', 'cien', 'doscientos', 'trescientos', 'cuatrocientos', 'quinientos', 'seiscientos', 'setecientos', 'ochocientos', 'novecientos'];
+    const thousands = ['', 'mil', 'millón', 'mil millones', 'billón'];
+  
+    const convert = (num) => {
+      if (num === 0) return '';
+      if (num < 21) return ones[num];
+      if (num < 100) return tens[Math.floor(num / 10)] + (num % 10 > 0 ? ' y ' + ones[num % 10] : '');
+      if (num < 1000) return hundreds[Math.floor(num / 100)] + (num % 100 > 0 ? ' ' + convert(num % 100) : '');
+      
+      let result = '';
+      const thousandIndex = Math.floor(Math.log10(num) / 3);
+      const divisor = Math.pow(1000, thousandIndex);
+      
+      // Obtengo la parte de miles, millones, etc.
+      result = convert(Math.floor(num / divisor)) + ' ' + thousands[thousandIndex];
+      
+      // Ajuste para manejar "millón" y "millones"
+      if (thousandIndex === 2 && num % 1000 === 0) {
+        result = result.replace('millón', 'millones de'); // Asegura que "cien millón" se convierta a "cien millones de"
+      } else if (thousandIndex === 2) {
+        result = result.replace('millón', 'millones');
+      }
+  
+      // Si hay un resto, lo convierto también
+      const remainder = num % divisor;
+      if (remainder > 0) {
+        result += (result ? ' ' : '') + convert(remainder);
+      }
+      
+      return result;
+    };
+  
+    return convert(num);
+  };
+  
+  const formatFecha = (fechaString) => {
+    if (!fechaString) return "Fecha no disponible";
+  
+    const meses = [
+      "enero", "febrero", "marzo", "abril", "mayo", "junio",
+      "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
+    ];
+  
+    // Dividimos la fecha por "-"
+    const partes = fechaString.split("-");
+    
+    if (partes.length !== 3) return "Formato inválido";
+  
+    const [año, mes, dia] = partes.map(Number);
+  
+    // Validamos que los valores sean correctos
+    if (isNaN(año) || isNaN(mes) || isNaN(dia) || mes < 1 || mes > 12) {
+      return "Fecha inválida";
+    }
+  
+    return `${dia.toString().padStart(2, "0")} de ${meses[mes - 1]} de ${año}`;
+  };
+  
+  
+  
   const styles = StyleSheet.create({
     page: {
       flexDirection: "column",
@@ -129,7 +195,7 @@ const ProposalDocument = ({ proposalData }) => {
 
           <View style={styles.row}>
             <Text style={[styles.encabezadotext, { flex: 1 }]}>
-              Bogotá D.C: {proposalData.date}
+            Bogotá D.C: {formatFecha(proposalData.date)}
             </Text>
             <Text style={styles.encabezadotext}>
               Cotización: {proposalData.Numerocotizacion}
@@ -197,7 +263,11 @@ const ProposalDocument = ({ proposalData }) => {
             <View style={{ marginTop: 12 }}>
               <Text>
                 <Text style={styles.title}>VALOR: $ </Text>
-                <Text style={styles.text}>{proposalData.monto}</Text>
+                <Text style={styles.text}>
+            
+               {proposalData.monto} {numberToWords(proposalData.monto)} pesos
+
+             </Text>
               </Text>
             </View>
           </View>

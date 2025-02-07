@@ -85,8 +85,6 @@ function App() {
               path="/cotizacion"
               element={userByemail?.estado === "Habilitado" ? <CotizacionForm /> : <Home />}
               />
-
-
                <Route path="/AprobarCotizacion/:id"
                 element={userByemail.rol === "Administrador" ? <AprobarCotizacionForm /> :<Home />} />
               <Route

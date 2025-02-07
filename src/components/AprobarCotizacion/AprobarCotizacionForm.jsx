@@ -9,10 +9,9 @@ const AprobarCotizacionForm = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const Cotizacion = useSelector((state) => state.cotizacionNumero);
-  console.log("Verificando estado de Cotizacion", Cotizacion.estado)
+  console.log("Verificando estado de Cotizacion", Cotizacion.estado);
   
   const [showGeneratePropasar, setShowGeneratePropasar] = useState(false); // Estado para controlar la visibilidad
-
 
   const [formData, setFormData] = useState({
     NombredeCliente: "",
@@ -33,18 +32,11 @@ const AprobarCotizacionForm = () => {
     imagenes: [],
   });
 
-
   const handleGeneratePDF = (proposalData) => {
-    // Ahora cotizacionData contiene los datos pasados
     if (proposalData) {
-      // Pasa estos datos al componente GeneratePropasar
-      // Aquí podrías hacer cualquier acción, como pasar los datos a otro componente, enviar a una API, etc.
       console.log("Enviando cotización a GeneratePropasar:", proposalData);
-      // Si `GeneratePropasar` es un componente, simplemente lo pasas como props:
-      // <GeneratePropasar cotizacionData={cotizacionData} />
     }
   };
-  
 
   const [error, setError] = useState("");
 
@@ -60,10 +52,6 @@ const AprobarCotizacionForm = () => {
     }
   }, [Cotizacion]);
 
-  useEffect(() => {
-    localStorage.setItem("proposalForm", JSON.stringify(formData));
-  }, [formData]);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
@@ -76,11 +64,10 @@ const AprobarCotizacionForm = () => {
       return;
     }
     setError("");
-  
+
     // Actualiza la cotización
     dispatch(updateCotizacion(formData))
       .then(() => {
-        // Una vez que la cotización se haya actualizado correctamente, obtenemos los datos actualizados
         dispatch(getCotizacionByNumero(id));
       })
       .catch((err) => {
@@ -88,7 +75,6 @@ const AprobarCotizacionForm = () => {
         console.error(err);
       });
   };
-  
 
   const fields = [
     { label: "Nombre Empresa", name: "CompañiadelCliente", required: true },
@@ -161,24 +147,22 @@ const AprobarCotizacionForm = () => {
 
         {/* Selector para estado de la cotización */}
         <label className={styles.label}>
-  
-  <h1 className={styles.laberestadocotizacion}>Estado de la Cotización:</h1>
-  
-  <select
-    name="estado"
-    value={formData.estado || ""}
-    onChange={handleChange}
-    required
-    className={`${styles.select} ${
-      formData.estado === "Pendiente" ? styles.pending :
-      formData.estado === "Aprobado" ? styles.approved : ""
-    }`}
-  >
-    <option value="">Seleccione un estado</option>
-    <option value="Pendiente">Pendiente</option>
-    <option value="Aprobado">Aprobado</option>
-  </select>
-</label>
+          <h1 className={styles.laberestadocotizacion}>Estado de la Cotización:</h1>
+          <select
+            name="estado"
+            value={formData.estado || ""}
+            onChange={handleChange}
+            required
+            className={`${styles.select} ${
+              formData.estado === "Pendiente" ? styles.pending :
+              formData.estado === "Aprobado" ? styles.approved : ""
+            }`}
+          >
+            <option value="">Seleccione un estado</option>
+            <option value="Pendiente">Pendiente</option>
+            <option value="Aprobado">Aprobado</option>
+          </select>
+        </label>
 
         {/* Sección para mostrar imágenes */}
         <div className={styles.imageContainer}>
@@ -200,30 +184,27 @@ const AprobarCotizacionForm = () => {
         <button type="submit" className={styles.button}>Actualizar Cotización</button>
 
         {Cotizacion?.estado === "Aprobado" && (
-  <button
-    type="button"
-    className={styles.button}
-    onClick={() => {
-      handleGeneratePDF(Cotizacion); // Llamada a la función de generación de PDF
-      setShowGeneratePropasar(true); // Activa la visibilidad de GenerateProposal
-    }}
-  >
-    Generar Cotización en PDF
-  </button>
-)}
-           <label className={styles.generarCotizacion} >
-            {showGeneratePropasar && <GenerateProposal proposalData={Cotizacion} />}
-            </label>
-        
+          <button
+            type="button"
+            className={styles.button}
+            onClick={() => {
+              handleGeneratePDF(Cotizacion); // Llamada a la función de generación de PDF
+              setShowGeneratePropasar(true); // Activa la visibilidad de GenerateProposal
+            }}
+          >
+            Generar Cotización en PDF
+          </button>
+        )}
+        <label className={styles.generarCotizacion}>
+          {showGeneratePropasar && <GenerateProposal proposalData={Cotizacion} />}
+        </label>
       </form>
-   
-    
-
     </div>
   );
 };
 
 export default AprobarCotizacionForm;
+
 
 
 // import React, { useState, useEffect } from "react";
@@ -452,5 +433,3 @@ export default AprobarCotizacionForm;
 // };
 
 // export default AprobarCotizacionForm;
-
-

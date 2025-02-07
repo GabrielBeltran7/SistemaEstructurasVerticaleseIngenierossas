@@ -4,8 +4,6 @@ import { postCotizacion } from "../../Redux/Actions";
 import UploadImages from "../SubirImagenesCloudonary/UploadImages";
 import styles from "./CotizacionForm.module.css";
 
-const months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-
 const CotizacionForm = () => {
   const dispatch = useDispatch();
   const { nombre, apellidos, email } = useSelector((state) => state.UserProfileByEmail);
@@ -26,29 +24,24 @@ const CotizacionForm = () => {
     Plazodeejecucion: "",
     CiudaddelCliente: "",
     imagenes: [],
-    
   };
 
-  const [formData, setFormData] = useState(() => {
-    const savedData = localStorage.getItem("proposalForm");
-    return savedData ? JSON.parse(savedData) : initialState;
-  });
+  // Primero intentamos cargar los datos desde el localStorage
+  const savedData = localStorage.getItem("proposalForm");
+  const [formData, setFormData] = useState(savedData ? JSON.parse(savedData) : initialState);
 
   const [error, setError] = useState(""); 
 
+  // Guardamos los datos en el localStorage cada vez que cambian
   useEffect(() => {
-    localStorage.setItem("proposalForm", JSON.stringify(formData));
+    if (formData !== initialState) {
+      localStorage.setItem("proposalForm", JSON.stringify(formData));
+    }
   }, [formData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
-  };
-
-  const formatDate = (inputDate) => {
-    if (!inputDate) return "";
-    const fecha = new Date(inputDate);
-    return `${fecha.getDate()} de ${months[fecha.getMonth()]} ${fecha.getFullYear()}`;
   };
 
   const handleSubmit = (e) => {
@@ -63,7 +56,6 @@ const CotizacionForm = () => {
 
     const formattedData = {
       ...formData,
-      date: formatDate(formData.date),
       NombreEmpleado: nombre || "", 
       ApellidoEmpleado: apellidos || "", 
       EmailEmpledado: email || "",
@@ -71,9 +63,10 @@ const CotizacionForm = () => {
       imagenes: urlImagen?.map((img) => img?.secure_url) || [], 
     };
 
+    // Enviar los datos a la acción Redux
     dispatch(postCotizacion(formattedData));
-    
-    // Limpiar formulario y localStorage después del envío exitoso
+
+    // Limpiar el formulario y eliminar los datos del localStorage después de enviar el formulario
     setFormData(initialState);
     localStorage.removeItem("proposalForm");
   };
@@ -133,4 +126,3 @@ const CotizacionForm = () => {
 };
 
 export default CotizacionForm;
-

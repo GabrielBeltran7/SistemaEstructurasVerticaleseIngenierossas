@@ -19,6 +19,7 @@
     "@react-pdf/renderer": "^4.1.6",
     "@redux-devtools/extension": "^3.3.0",
     "antd": "^5.23.3",
+    "compressorjs": "^1.2.1",
     "firebase": "^11.2.0",
     "moment": "^2.30.1",
     "numalet": "^0.2.1",

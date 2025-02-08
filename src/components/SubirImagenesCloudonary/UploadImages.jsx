@@ -10,7 +10,7 @@ const UploadImages = () => {
   const [uploading, setUploading] = useState(false);
   const dispatch = useDispatch();
 
-  const handleImageChange = async (event) => {
+  const handleImageChange = (event) => {
     const files = Array.from(event.target.files);
     const totalImages = files.length + images.length;
 
@@ -19,45 +19,7 @@ const UploadImages = () => {
       return;
     }
 
-    // Procesar imágenes con Canvas para reducir tamaño sin cambiar dimensiones
-    const compressedImages = await Promise.all(
-      files.map((file) => compressImageWithCanvas(file))
-    );
-
-    setImages((prevImages) => [...prevImages, ...compressedImages]);
-  };
-
-  // Función para optimizar imagen con Canvas sin cambiar su tamaño
-  const compressImageWithCanvas = (file) => {
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = (event) => {
-        const img = new Image();
-        img.src = event.target.result;
-        img.onload = () => {
-          const canvas = document.createElement("canvas");
-          const ctx = canvas.getContext("2d");
-
-          canvas.width = img.width;
-          canvas.height = img.height;
-          ctx.drawImage(img, 0, 0, img.width, img.height);
-
-          // Convertir a formato JPG y reducir calidad al 70%
-          canvas.toBlob(
-            (blob) => {
-              const optimizedFile = new File([blob], file.name, {
-                type: "image/jpeg",
-                lastModified: Date.now(),
-              });
-              resolve(optimizedFile);
-            },
-            "image/jpeg",
-            0.7 // Calidad ajustable (0.7 recomendado para buena compresión)
-          );
-        };
-      };
-    });
+    setImages((prevImages) => [...prevImages, ...files]);
   };
 
   const handleRemoveImage = (index) => {
@@ -87,27 +49,67 @@ const UploadImages = () => {
     }
   };
 
-  const uploadImagesAndDispatch = async (uploadedImages) => {
-    dispatch(imagenurl(uploadedImages));
-    Swal.fire({
-      icon: "success",
-      title: "Imágenes guardadas en la base de datos. Exitosamente",
-      timerProgressBar: true,
-      timer: 3000,
+  const optimizeImage = (file) => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        const img = new Image();
+        img.src = event.target.result;
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+
+          // Tamaño máximo para móviles (ajusta si es necesario)
+          const maxWidth = 1280;
+          const maxHeight = 1280;
+
+          let { width, height } = img;
+
+          // Ajustar tamaño manteniendo la proporción
+          if (width > maxWidth || height > maxHeight) {
+            const scale = Math.min(maxWidth / width, maxHeight / height);
+            width = Math.round(width * scale);
+            height = Math.round(height * scale);
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Determinar calidad según peso original
+          const fileSizeMB = file.size / (1024 * 1024);
+          let quality = 0.9;
+
+          if (fileSizeMB > 10) quality = 0.5;
+          else if (fileSizeMB > 5) quality = 0.6;
+          else if (fileSizeMB > 3) quality = 0.7;
+          else if (fileSizeMB > 1) quality = 0.8;
+
+          canvas.toBlob(
+            (blob) => {
+              resolve(new File([blob], file.name, { type: "image/jpeg" }));
+            },
+            "image/jpeg",
+            quality
+          );
+        };
+      };
     });
-    setImages([]);
   };
 
   const handleUpload = async (event) => {
     event.preventDefault();
     setUploading(true);
 
-    const cloudinaryUrl =
-      "https://api.cloudinary.com/v1_1/dnigz3zfp/image/upload";
+    const cloudinaryUrl = "https://api.cloudinary.com/v1_1/dnigz3zfp/image/upload";
     const uploadPreset = "upload_unsigned";
 
     try {
-      const uploadPromises = images.map(async (image) => {
+      // Optimizar todas las imágenes antes de subirlas
+      const optimizedImages = await Promise.all(images.map(optimizeImage));
+
+      const uploadPromises = optimizedImages.map(async (image) => {
         const formData = new FormData();
         formData.append("file", image);
         formData.append("upload_preset", uploadPreset);
@@ -129,6 +131,17 @@ const UploadImages = () => {
     } finally {
       setUploading(false);
     }
+  };
+
+  const uploadImagesAndDispatch = async (uploadedImages) => {
+    dispatch(imagenurl(uploadedImages));
+    Swal.fire({
+      icon: "success",
+      title: "Imágenes guardadas en la base de datos. Exitosamente",
+      timerProgressBar: true,
+      timer: 3000,
+    });
+    setImages([]);
   };
 
   const CustomButton = ({ onClick, disabled, children }) => (
@@ -157,8 +170,7 @@ const UploadImages = () => {
             className={styles.fileInput}
           />
           <span className={styles.buttoneliminarimagenes}>
-            {images.length} {images.length === 1 ? "imagen" : "imágenes"}{" "}
-            seleccionadas
+            {images.length} {images.length === 1 ? "imagen" : "imágenes"} seleccionadas
           </span>
         </div>
         <div className={styles.imageGrid}>
@@ -196,6 +208,7 @@ const UploadImages = () => {
 };
 
 export default UploadImages;
+
 
 
 

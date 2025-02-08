@@ -1,19 +1,16 @@
-
-
 import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 import styles from "./UploadImages.module.css";
 import { imagenurl } from "../../Redux/Actions";
-import Compressor from "compressorjs";
 
 const UploadImages = () => {
   const [images, setImages] = useState([]);
   const [uploading, setUploading] = useState(false);
   const dispatch = useDispatch();
 
-  const handleImageChange = (event) => {
+  const handleImageChange = async (event) => {
     const files = Array.from(event.target.files);
     const totalImages = files.length + images.length;
 
@@ -22,7 +19,45 @@ const UploadImages = () => {
       return;
     }
 
-    setImages((prevImages) => [...prevImages, ...files]);
+    // Procesar imágenes con Canvas para reducir tamaño sin cambiar dimensiones
+    const compressedImages = await Promise.all(
+      files.map((file) => compressImageWithCanvas(file))
+    );
+
+    setImages((prevImages) => [...prevImages, ...compressedImages]);
+  };
+
+  // Función para optimizar imagen con Canvas sin cambiar su tamaño
+  const compressImageWithCanvas = (file) => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        const img = new Image();
+        img.src = event.target.result;
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0, img.width, img.height);
+
+          // Convertir a formato JPG y reducir calidad al 70%
+          canvas.toBlob(
+            (blob) => {
+              const optimizedFile = new File([blob], file.name, {
+                type: "image/jpeg",
+                lastModified: Date.now(),
+              });
+              resolve(optimizedFile);
+            },
+            "image/jpeg",
+            0.7 // Calidad ajustable (0.7 recomendado para buena compresión)
+          );
+        };
+      };
+    });
   };
 
   const handleRemoveImage = (index) => {
@@ -63,55 +98,30 @@ const UploadImages = () => {
     setImages([]);
   };
 
-
-
-  const compressImage = (image) => {
-    return new Promise((resolve, reject) => {
-      if (image.size > 500 * 1024) {
-        // 🔥 Solo comprimir si la imagen pesa más de 500KB
-        new Compressor(image, {
-          quality: 0.7, // 🔥 Baja calidad para reducir peso
-          convertSize: 1000000, // 🔄 Convierte a JPG si pesa más de 100KB
-          mimeType: "image/jpeg",
-          success(compressedImage) {
-            resolve(compressedImage);
-          },
-          error(err) {
-            reject(err);
-          },
-        });
-      } else {
-        resolve(image); // 🔄 Si la imagen ya es pequeña, no la toca
-      }
-    });
-  };
-  
   const handleUpload = async (event) => {
     event.preventDefault();
     setUploading(true);
-  
+
+    const cloudinaryUrl =
+      "https://api.cloudinary.com/v1_1/dnigz3zfp/image/upload";
+    const uploadPreset = "upload_unsigned";
+
     try {
-      const compressedImages = await Promise.all(
-        images.map((image) => compressImage(image))
-      );
-  
-      const uploadPromises = compressedImages.map(async (image) => {
+      const uploadPromises = images.map(async (image) => {
         const formData = new FormData();
         formData.append("file", image);
-        formData.append("upload_preset", "upload_unsigned");
-  
-        const response = await fetch(
-          "https://api.cloudinary.com/v1_1/dnigz3zfp/image/upload",
-          {
-            method: "POST",
-            body: formData,
-          }
-        );
-  
+        formData.append("upload_preset", uploadPreset);
+
+        const response = await fetch(cloudinaryUrl, {
+          method: "POST",
+          body: formData,
+        });
+
         return response.json();
       });
-  
+
       const results = await Promise.all(uploadPromises);
+
       uploadImagesAndDispatch(results);
     } catch (error) {
       console.error("Error al subir imágenes", error);
@@ -120,7 +130,6 @@ const UploadImages = () => {
       setUploading(false);
     }
   };
-  
 
   const CustomButton = ({ onClick, disabled, children }) => (
     <button
@@ -135,12 +144,10 @@ const UploadImages = () => {
     </button>
   );
 
-
-
   return (
     <Card className={styles.cardContainer}>
       <CardContent>
-        <h2 className={styles.cardTitle}>Subir un Maximo de 8 Imágenes</h2>
+        <h2 className={styles.cardTitle}>Subir un Máximo de 8 Imágenes</h2>
         <div className={styles.inputContainer}>
           <input
             type="file"
@@ -150,7 +157,8 @@ const UploadImages = () => {
             className={styles.fileInput}
           />
           <span className={styles.buttoneliminarimagenes}>
-            {images.length} {images.length === 1 ? "imagen" : "imágenes"} seleccionadas
+            {images.length} {images.length === 1 ? "imagen" : "imágenes"}{" "}
+            seleccionadas
           </span>
         </div>
         <div className={styles.imageGrid}>
@@ -188,9 +196,6 @@ const UploadImages = () => {
 };
 
 export default UploadImages;
-
-
-
 
 
 

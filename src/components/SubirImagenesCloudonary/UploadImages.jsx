@@ -59,45 +59,57 @@ const UploadImages = () => {
         img.onload = () => {
           const canvas = document.createElement("canvas");
           const ctx = canvas.getContext("2d");
-
-          // Tamaño máximo para móviles (ajusta si es necesario)
-          const maxWidth = 1280;
-          const maxHeight = 1280;
-
-          let { width, height } = img;
-
-          // Ajustar tamaño manteniendo la proporción
-          if (width > maxWidth || height > maxHeight) {
-            const scale = Math.min(maxWidth / width, maxHeight / height);
-            width = Math.round(width * scale);
-            height = Math.round(height * scale);
-          }
-
-          canvas.width = width;
-          canvas.height = height;
-          ctx.drawImage(img, 0, 0, width, height);
-
-          // Determinar calidad según peso original
-          const fileSizeMB = file.size / (1024 * 1024);
-          let quality = 0.9;
-
-          if (fileSizeMB > 10) quality = 0.8;
-          else if (fileSizeMB > 5) quality = 0.83;
-          else if (fileSizeMB > 3) quality = 0.86;
-          else if (fileSizeMB > 1) quality = 0.89;
-
-          canvas.toBlob(
-            (blob) => {
-              resolve(new File([blob], file.name, { type: "image/jpeg" }));
-            },
-            "image/jpeg",
-            quality
-          );
+  
+          // Tamaño fijo para móviles (vertical)
+          const maxWidth = 1080;
+          const maxHeight = 1920;
+  
+          canvas.width = maxWidth;
+          canvas.height = maxHeight;
+          ctx.drawImage(img, 0, 0, maxWidth, maxHeight);
+  
+          let quality = 0.9; // Calidad inicial
+          const targetSizeKB = 280; // Objetivo medio entre 250 KB y 300 KB
+  
+          const compressImage = (quality) =>
+            new Promise((resolveQuality) => {
+              canvas.toBlob(
+                async (blob) => {
+                  let fileSizeKB = blob.size / 1024; // Convertir bytes a KB
+  
+                  // Reducir calidad si el archivo es muy grande
+                  while (fileSizeKB > 300 && quality > 0.3) {
+                    quality -= 0.05; // Reducir calidad en intervalos de 5%
+                    const newBlob = await new Promise((res) =>
+                      canvas.toBlob(res, "image/jpeg", quality)
+                    );
+                    fileSizeKB = newBlob.size / 1024;
+                    blob = newBlob;
+                  }
+  
+                  // Aumentar calidad si el archivo es muy pequeño
+                  while (fileSizeKB < 250 && quality < 0.95) {
+                    quality += 0.02; // Aumentar calidad en intervalos de 2%
+                    const newBlob = await new Promise((res) =>
+                      canvas.toBlob(res, "image/jpeg", quality)
+                    );
+                    fileSizeKB = newBlob.size / 1024;
+                    blob = newBlob;
+                  }
+  
+                  resolveQuality(new File([blob], file.name, { type: "image/jpeg" }));
+                },
+                "image/jpeg",
+                quality
+              );
+            });
+  
+          compressImage(quality).then(resolve);
         };
       };
     });
   };
-
+  
   const handleUpload = async (event) => {
     event.preventDefault();
     setUploading(true);

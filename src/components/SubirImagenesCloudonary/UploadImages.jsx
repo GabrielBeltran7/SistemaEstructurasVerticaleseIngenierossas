@@ -65,42 +65,53 @@ const UploadImages = () => {
 
 
 
-
+  const compressImage = (image) => {
+    return new Promise((resolve, reject) => {
+      if (image.size > 500 * 1024) {
+        // 🔥 Solo comprimir si la imagen pesa más de 500KB
+        new Compressor(image, {
+          quality: 0.1, // 🔥 Baja calidad para reducir peso
+          convertSize: 100000, // 🔄 Convierte a JPG si pesa más de 100KB
+          mimeType: "image/jpeg",
+          success(compressedImage) {
+            resolve(compressedImage);
+          },
+          error(err) {
+            reject(err);
+          },
+        });
+      } else {
+        resolve(image); // 🔄 Si la imagen ya es pequeña, no la toca
+      }
+    });
+  };
+  
   const handleUpload = async (event) => {
     event.preventDefault();
     setUploading(true);
   
-    const cloudinaryUrl = "https://api.cloudinary.com/v1_1/dnigz3zfp/image/upload";
-    const uploadPreset = "upload_unsigned";
-  
     try {
-      const uploadPromises = images.map((image) => {
-        return new Promise((resolve, reject) => {
-          new Compressor(image, {
-            quality: 0.8, // Reducir calidad
-            convertSize: 500000, // Convertir si es mayor a 500KB
-            success(compressedImage) {
-              const formData = new FormData();
-              formData.append("file", compressedImage);
-              formData.append("upload_preset", uploadPreset);
-            fetch(cloudinaryUrl, {
-                method: "POST",
-                body: formData,
-              })
-                .then((response) => response.json())
-                .then(resolve)
-                .catch(reject);
-            },
-            error(err) {
-              reject(err);
-            },
-          });
-        });
+      const compressedImages = await Promise.all(
+        images.map((image) => compressImage(image))
+      );
+  
+      const uploadPromises = compressedImages.map(async (image) => {
+        const formData = new FormData();
+        formData.append("file", image);
+        formData.append("upload_preset", "upload_unsigned");
+  
+        const response = await fetch(
+          "https://api.cloudinary.com/v1_1/dnigz3zfp/image/upload",
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+  
+        return response.json();
       });
   
       const results = await Promise.all(uploadPromises);
-      console.log("formato de imagenes", results)
-  
       uploadImagesAndDispatch(results);
     } catch (error) {
       console.error("Error al subir imágenes", error);

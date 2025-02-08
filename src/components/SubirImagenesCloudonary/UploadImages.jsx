@@ -81,10 +81,10 @@ const UploadImages = () => {
           const fileSizeMB = file.size / (1024 * 1024);
           let quality = 0.9;
 
-          if (fileSizeMB > 10) quality = 0.6;
-          else if (fileSizeMB > 5) quality = 0.7;
-          else if (fileSizeMB > 3) quality = 0.8;
-          else if (fileSizeMB > 1) quality = 0.85;
+          if (fileSizeMB > 10) quality = 0.8;
+          else if (fileSizeMB > 5) quality = 0.83;
+          else if (fileSizeMB > 3) quality = 0.86;
+          else if (fileSizeMB > 1) quality = 0.89;
 
           canvas.toBlob(
             (blob) => {

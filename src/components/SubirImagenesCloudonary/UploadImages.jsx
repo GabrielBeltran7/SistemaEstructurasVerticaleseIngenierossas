@@ -70,7 +70,7 @@ const UploadImages = () => {
       if (image.size > 500 * 1024) {
         // 🔥 Solo comprimir si la imagen pesa más de 500KB
         new Compressor(image, {
-          quality: 0.1, // 🔥 Baja calidad para reducir peso
+          quality: 0.6, // 🔥 Baja calidad para reducir peso
           convertSize: 100000, // 🔄 Convierte a JPG si pesa más de 100KB
           mimeType: "image/jpeg",
           success(compressedImage) {

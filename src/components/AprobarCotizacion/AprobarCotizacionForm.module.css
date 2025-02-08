@@ -12,7 +12,9 @@
   border-radius: 10px;
   background-color: #fff;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-}.error{
+}
+
+.error {
   color: red;
   display: flex;
   align-items: center;
@@ -21,7 +23,6 @@
   margin: 10px 0;
   font-weight: bold;
 }
-
 
 /* Contenedor para los campos alineados en fila (Fecha y Cotización) */
 .row {
@@ -59,11 +60,6 @@
 .textarea {
   min-height: 120px;
   resize: vertical;
-}
-
-/* Estilo para los campos obligatorios */
-.input[required], .textarea[required] {
-  border-color: #0062cc;
 }
 
 /* Estilo para los campos al recibir focus */
@@ -106,9 +102,6 @@
   margin-bottom: 20px;
 }
 
-
-
-
 .imageContainer {
   margin-top: 20px;
   text-align: center;
@@ -121,47 +114,55 @@
   grid-template-columns: repeat(2, 1fr); /* 2 columnas en móvil */
 }
 
-
-
 .imageItem {
   width: 100%;
   max-width: 150px;
-  height: 150px;
+  height: 250px;
   overflow: hidden;
-  border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease-in-out;
+ 
 }
 
 .imageItem:hover {
-  transform: scale(1.1);
+  transform: scale(1);
 }
 
 .imageItem img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 12px;
-}/* Asegúrate de que los checkboxes sean visibles */
-.checkboxLabel {
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-  font-size: 16px;
 }
 
-.checkboxText {
-  margin-left: 5px;
-  font-size: 14px;
-}.input[type="checkbox"] {
+/* Personalización del checkbox con icono de check */
+.checkbox {
   width: 20px;
   height: 20px;
-  margin-right: 10px; /* Añade un margen para separar el checkbox del texto */
-  transform: scale(1.5); /* Opcional: cambia el tamaño si está demasiado pequeño */
-}.select-wrapper {
+  appearance: none; /* Oculta el estilo por defecto del navegador */
+  border: 0.5px solid #7fa7cd;
+  border-radius: 1px;
+  cursor: pointer;
   position: relative;
-  max-width: 300px;
-  margin: 0 auto;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.checkbox:checked {
+  background-color: #15c732;
+  border-color: #0056b3;
+}
+
+.checkbox:checked::after {
+  content: '\2714'; /* Código Unicode para el check ✔ */
+  font-size: 14px;
+  color: rgb(0, 0, 0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
 }
 
 .select {
@@ -189,48 +190,26 @@
   background-color: #d4edda;
   border: 1px solid #28a745;
   color: #28a745;
-}.laberestadocotizacion{
-  display: flex; 
-  justify-content: center; /* Centra horizontalmente */
-  align-items: center; /* Centra verticalmente (si tiene altura definida) */
-  color: black;
-  font-size: 1.3rem;
-  text-align: center; /* Para centrar texto en caso de elementos inline */
-  height: 100%; /* Asegura que tenga altura si está dentro de un contenedor flex */
-  width: 100%; /* Si necesitas que ocupe todo el ancho */
-}.generarCotizacion{
-  display: table-column; 
-  
-  justify-content: center; /* Centra horizontalmente */
-  align-items: center; /* Centra verticalmente (si tiene altura definida) */
-  background-color: white;
-  font-size: 1.6rem;
-  text-align: center; /* Para centrar texto en caso de elementos inline */
-  height: 100%; /* Asegura que tenga altura si está dentro de un contenedor flex */
-  width: 100%; /* Si necesitas que ocupe todo el ancho */
 }
 
-/* Triángulo indicador */
-.select-wrapper::after {
-  content: "▼";
-  font-size: 12px;
-  position: absolute;
-  top: 50%;
-  right: 12px;
-  transform: translateY(-50%);
-  pointer-events: none;
-  color: #999;
-}@media (min-width: 768px) {
+.laberestadocotizacion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  font-size: 1.3rem;
+  text-align: center;
+  height: 100%;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
   .imageGrid {
     grid-template-columns: repeat(4, 1fr); /* 4 columnas en pantallas grandes */
-  }.laberestadocotizacion{
-    display: flex; 
-    justify-content: center; /* Centra horizontalmente */
-    align-items: center; /* Centra verticalmente (si tiene altura definida) */
-    color: black;
-    font-size: 2rem;
-    height: 100%; /* Asegura que tenga altura si está dentro de un contenedor flex */
-    width: 100%; /* Si necesitas que ocupe todo el ancho */
   }
- 
+
+  .laberestadocotizacion {
+    font-size: 2rem;
+  }
 }
+

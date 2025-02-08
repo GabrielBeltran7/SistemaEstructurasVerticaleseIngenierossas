@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCotizacion, getCotizacionByNumero } from "../../Redux/Actions";
@@ -8,6 +9,8 @@ import GenerateProposal from "../GenerateProposal/GenerateProposal";
 const AprobarCotizacionForm = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+   //Estado para manejar CheckBox
+  const [imagenesSeleccionadas, setImagenesSeleccionadas] = useState([]);
    const { email } = useSelector((state) => state.UserProfileByEmail);
   const Cotizacion = useSelector((state) => state.cotizacionNumero);
   
@@ -33,6 +36,20 @@ const AprobarCotizacionForm = () => {
     imagenes: [],
   });
 
+  //funcion para manejar CheckBox
+  const handleCheckboxChange = (imagen) => {
+    setImagenesSeleccionadas((prev) => {
+      if (prev.includes(imagen)) {
+        return prev.filter((img) => img !== imagen); // Si ya está, la elimina
+      } else if (prev.length < 3) {
+        return [...prev, imagen]; // Solo agrega si hay menos de 3 seleccionadas
+      } else {
+        return prev; // No permite más de 3
+      }
+    });
+  };
+  
+  
 
   const handleGeneratePDF = (proposalData) => {
     if (proposalData) {
@@ -64,8 +81,8 @@ const AprobarCotizacionForm = () => {
   const handleSubmit = async (e) => { 
     e.preventDefault();
   
-    if (formData.imagenes.length === 0) {
-      setError("Debe seleccionar al menos una imagen.");
+    if (imagenesSeleccionadas.length !== 3) {
+      setError("Debe seleccionar exactamente 3 imágenes.");
       return;
     }
   
@@ -73,27 +90,18 @@ const AprobarCotizacionForm = () => {
   
     const formattedData = {
       ...formData,
+      imagenesAprobadas: imagenesSeleccionadas, // Guarda las imágenes seleccionadas
       EmailAdministrador: email || "",
     };
   
-  
-  
     try {
-      await dispatch(updateCotizacion(formattedData)); // Si devuelve una promesa, esto funcionará
-     
-  
-      await dispatch(getCotizacionByNumero(formattedData.Numerocotizacion)); // Obtiene la cotización actualizada
+      await dispatch(updateCotizacion(formattedData)); 
+      await dispatch(getCotizacionByNumero(formattedData.Numerocotizacion)); 
     } catch (err) {
       setError("Hubo un error al actualizar la cotización.");
       console.error("Error al actualizar:", err);
     }
   };
-  
-  
-
-
-
-
   const fields = [
     { label: "Nombre Empresa", name: "CompañiadelCliente", required: true },
     { label: "Nombre del Representante Legal", name: "NombredeCliente", required: true },
@@ -182,23 +190,33 @@ const AprobarCotizacionForm = () => {
           </select>
         </label>
 
-        {/* Sección para mostrar imágenes */}
-        <div className={styles.imageContainer}>
-          <h1 className={styles.laberestadocotizacion}>Imágenes Preaprobadas</h1>
-          {formData.imagenes && formData.imagenes.length > 0 ? (
-            <div className={styles.imageGrid}>
-              {formData.imagenes.map((imagen, index) => (
-                <div key={index} className={styles.imageItem}>
-                  <img src={imagen} alt={`Imagen ${index + 1}`} className={styles.image} />
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p>No hay imágenes seleccionadas.</p>
-          )}
+       
+      {/* Sección para mostrar imágenes con checkboxes */}
+<div className={styles.imageContainer}>
+  <h1 className={styles.laberestadocotizacion}>Imágenes Preaprobadas Selecciona 3</h1>
+  {formData.imagenes && formData.imagenes.length > 0 ? (
+    <div className={styles.imageGrid}>
+      {formData.imagenes.map((imagen, index) => (
+        <div key={index} className={styles.imageItem}>
+          <input
+  type="checkbox"
+  id={`checkbox-${index}`}
+  className={styles.checkbox}
+  checked={imagenesSeleccionadas.includes(imagen)}
+  onChange={() => handleCheckboxChange(imagen)}
+  disabled={!imagenesSeleccionadas.includes(imagen) && imagenesSeleccionadas.length >= 3} // Bloquea si ya hay 3
+/>
+          <label htmlFor={`checkbox-${index}`} className={styles.imageLabel}>
+            <img src={imagen} alt={`Imagen ${index + 1}`} className={styles.image} />
+          </label>
         </div>
-
-        {error && <p className={styles.error}>{error}</p>}
+      ))}
+    </div>
+  ) : (
+    <p>No hay imágenes seleccionadas.</p>
+  )}
+</div>
+ {error && <p className={styles.error}>{error}</p>}
         <button type="submit" className={styles.button}>Actualizar Cotización</button>
 
         {Cotizacion?.estado === "Aprobado" && (
@@ -222,3 +240,4 @@ const AprobarCotizacionForm = () => {
 };
 
 export default AprobarCotizacionForm;
+

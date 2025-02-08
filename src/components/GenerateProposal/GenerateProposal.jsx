@@ -1,4 +1,5 @@
 
+
 import React from "react";
 import {
   PDFDownloadLink,
@@ -9,50 +10,24 @@ import {
   Image,
   StyleSheet,
 } from "@react-pdf/renderer";
-
+import numalet from "numalet";
 const ProposalDocument = ({ proposalData }) => {
+const numaletInstance = numalet({
+    lang: 'es', // Idioma español
+    currency: {
+      singular: "peso",    // Si se trata de 1 peso
+      plural: "pesos",     // Si es más de 1 peso
+      centSingular: "centavo", // Si tienes decimales, como 1 centavo
+      centPlural: "centavos", // Si son más de 1 centavo
+    }
+  });
+  const monto = proposalData.monto;
+  const resultado = numaletInstance(monto);
+  const resultadoSinMoneda = resultado.replace('MXN', 'PESOS').trim();
 
-  const numberToWords = (num) => { 
-    const ones = [
-      'cero', 'uno', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve', 'diez', 'once', 'doce', 'trece', 'catorce', 'quince',
-      'dieciséis', 'diecisiete', 'dieciocho', 'diecinueve', 'veinte'
-    ];
-    const tens = ['', '', 'veinte', 'treinta', 'cuarenta', 'cincuenta', 'sesenta', 'setenta', 'ochenta', 'noventa'];
-    const hundreds = ['', 'cien', 'doscientos', 'trescientos', 'cuatrocientos', 'quinientos', 'seiscientos', 'setecientos', 'ochocientos', 'novecientos'];
-    const thousands = ['', 'mil', 'millón', 'mil millones', 'billón'];
-  
-    const convert = (num) => {
-      if (num === 0) return '';
-      if (num < 21) return ones[num];
-      if (num < 100) return tens[Math.floor(num / 10)] + (num % 10 > 0 ? ' y ' + ones[num % 10] : '');
-      if (num < 1000) return hundreds[Math.floor(num / 100)] + (num % 100 > 0 ? ' ' + convert(num % 100) : '');
-      
-      let result = '';
-      const thousandIndex = Math.floor(Math.log10(num) / 3);
-      const divisor = Math.pow(1000, thousandIndex);
-      
-      // Obtengo la parte de miles, millones, etc.
-      result = convert(Math.floor(num / divisor)) + ' ' + thousands[thousandIndex];
-      
-      // Ajuste para manejar "millón" y "millones"
-      if (thousandIndex === 2 && num % 1000 === 0) {
-        result = result.replace('millón', 'millones de'); // Asegura que "cien millón" se convierta a "cien millones de"
-      } else if (thousandIndex === 2) {
-        result = result.replace('millón', 'millones');
-      }
-  
-      // Si hay un resto, lo convierto también
-      const remainder = num % divisor;
-      if (remainder > 0) {
-        result += (result ? ' ' : '') + convert(remainder);
-      }
-      
-      return result;
-    };
-  
-    return convert(num);
-  };
-  
+
+
+console.log("imagenes aprobadas", proposalData.imagenesAprobadas)
   const formatFecha = (fechaString) => {
     if (!fechaString) return "Fecha no disponible";
   
@@ -85,7 +60,41 @@ const ProposalDocument = ({ proposalData }) => {
       width: "100%",
       height: "100%",
       position: "relative", // Para el pie de página
-    },
+
+
+    }, 
+ 
+
+      contentContainer: {
+        flex: 1, // ✅ Permite que el contenido ocupe el espacio necesario
+        flexDirection: "column",
+        paddingRight: 160, // ✅ Aumenté el padding para que el texto no se meta debajo de las imágenes
+        minWidth: "60%", // ✅ Evita que el texto se reduzca demasiado
+      },
+      textContainer: {
+        marginBottom: 10, // ✅ Espacio entre bloques de texto
+        flexShrink: 1, // ✅ Permite que el texto se ajuste sin desbordarse
+        lineHeight: 1.5,
+      },
+      infoContainer: {
+        marginTop: 16, // ✅ Separa los bloques de información
+      },
+      imageContainer: {
+        position: "absolute",
+        right: 20,
+        top: -60,
+        alignItems: "center",
+        width: 100, // ✅ Le doy un ancho para que el paddingRight se respete correctamente
+      },
+      verticalImage: {
+        width: 110,
+        height: 160,
+        marginBottom: 8,
+        borderRadius: 4,
+      },
+    
+    
+
     imagePage: {
       flexDirection: "column",
       justifyContent: "center",
@@ -240,41 +249,55 @@ const ProposalDocument = ({ proposalData }) => {
         {footer}
       </Page>
 
-      {/* Más contenido con pie de página */}
       <Page size="A4" orientation="landscape" style={styles.page}>
-        <View style={styles.section}>
-          {encabezado}
-          <View style={{ marginTop: 40 }}>
-            <Text>
-              <Text style={styles.title}>
-                ACTIVIDADES A DESARROLLAR:{"\n\n"}
-              </Text>
-              <View style={{ marginTop: 8 }}>
-                <Text style={styles.text}>{proposalData.DetalledelServicio}</Text>
-              </View>
-            </Text>
-            <View style={{ marginTop: 12 }}>
-              <Text>
-                <Text style={styles.title}>PLAZO DE EJECUCIÓN: </Text>
-                <Text style={styles.text}>{proposalData.Plazodeejecucion}</Text>
-              </Text>
-            </View>
+  <View style={styles.section}>
+    {encabezado}
+    <View style={{ marginTop: 40, flexDirection: "row", justifyContent: "space-between" }}>
+      
+      {/* Contenedor de texto y valores */}
+      <View style={styles.contentContainer}>
+        <Text style={styles.title}>ACTIVIDADES A DESARROLLAR:{"\n\n"}</Text>
 
-            <View style={{ marginTop: 12 }}>
-              <Text>
-                <Text style={styles.title}>VALOR: $ </Text>
-                <Text style={styles.text}>
-            
-               {proposalData.monto} {numberToWords(proposalData.monto)} pesos
-
-             </Text>
-              </Text>
-            </View>
-          </View>
+        <View style={styles.textContainer}>
+          <Text style={styles.text}>{proposalData.DetalledelServicio}</Text>
         </View>
 
-        {footer}
-      </Page>
+        <View style={styles.infoContainer}>
+          <Text>
+            <Text style={styles.title}>PLAZO DE EJECUCIÓN: </Text>
+            <Text style={styles.text}>{proposalData.Plazodeejecucion}</Text>
+          </Text>
+        </View>
+
+        <View style={styles.infoContainer}>
+          <Text>
+            <Text style={styles.title}>VALOR: $ </Text>
+            <Text style={styles.text}>
+            <Text>
+        {new Intl.NumberFormat("es-ES").format(monto)}{" "}
+        ({resultadoSinMoneda})
+         </Text>
+            </Text>
+          </Text>
+        </View>
+      </View>
+
+      {/* Contenedor de imágenes */}
+      <View style={styles.imageContainer}>
+        {proposalData.imagenesAprobadas.map((imagen, index) => (
+          <Image key={index} style={styles.verticalImage} src={imagen} />
+        ))}
+      </View>
+    </View>
+  </View>
+
+  {footer}
+</Page>
+
+
+
+
+
 
       <Page size="A4" orientation="landscape" style={styles.page}>
         <View style={styles.section}>
@@ -414,7 +437,6 @@ const handleReload = () => {
 const GenerateProposal = ({ proposalData }) => {
   return (
     <>
-    
   <div style={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "1rem" }}>
     <PDFDownloadLink
       document={<ProposalDocument proposalData={proposalData} />}

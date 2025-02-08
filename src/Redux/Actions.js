@@ -79,6 +79,7 @@ export const updateCotizacion = (cotizacion) => {
         // Si encontramos el documento, actualizamos
         const docRef = querySnapshot.docs[0].ref;
         const updatedDataCotizacion = {
+          imagenesAprobadas: cotizacion.imagenesAprobadas,
           EmailAdministrador: cotizacion.EmailAdministrador,
           NombredeCliente: cotizacion.NombredeCliente,
           CompañiadelCliente: cotizacion.CompañiadelCliente,

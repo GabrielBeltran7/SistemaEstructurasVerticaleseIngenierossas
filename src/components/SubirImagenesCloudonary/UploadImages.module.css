@@ -6,7 +6,19 @@
   background-color: white;
   border-radius: 1rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}.buttoneliminarimagenes{
+
+}.removeButton{
+  position: absolute;
+  bottom: -18px;  /* Lo coloca en la parte inferior */
+  left: 0px;    /* Lo coloca en la parte izquierda */
+  background-color: rgba(238, 8, 8, 0.623);
+  color: white;
+  padding: 2px 7px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.buttoneliminarimagenes{
   color: black;
   background-color: #f2f2f2;
   font-size: 1.6rem;
@@ -49,15 +61,16 @@
 }
 
 .imagePreview {
-  position: relative;
-  border: 1px solid #d1d5db;
+  position: relative; /* Para que el botón se posicione en relación a este contenedor */
+  margin-top: 1rem;
+  border: 2px solid #d1d5db;
   border-radius: 0.5rem;
   overflow: hidden;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 5px rgba(9, 79, 247, 0.993);
 }
 
 .imagePreview img {
-  height: 10rem;
+  height: 14rem;
   width: 100%;
   object-fit: cover;
   transition: transform 0.2s ease;
@@ -109,7 +122,10 @@
   }
 
   .imagePreview img {
-    height: 8rem;
+    height: 13rem;
+    width: 100%;
+    object-fit: cover;
+    transition: transform 0.2s ease;
   }
 
   .buttoneliminarimagenes {

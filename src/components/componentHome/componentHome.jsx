@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { FaHardHat, FaBuilding, FaUsers } from "react-icons/fa";
 import styles from "./componenthome.module.css";
 
-
 function ComponentHome() {
   return (
     <div className={styles.container}>

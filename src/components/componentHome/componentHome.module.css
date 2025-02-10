@@ -1,86 +1,165 @@
-/* Fondo oscuro con un toque de azul y un diseño minimalista */
+/* Estilos generales */
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background: linear-gradient(10deg, #2c3e50, #34495e);
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-  padding: 20px;
+  font-family: "Arial", sans-serif;
+  background: #2c3e50; /* Color de fondo actualizado */
   color: white;
-}
-
-/* Contenedor de botones centrados */
-.containerbutton {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  margin-top: 30px;
-}
-
-/* Estilo de las etiquetas (títulos) */
-.label {
-  color: #ecf0f1;
-  font-size: 3rem;
-  margin-bottom: 20px;
   text-align: center;
+}
+
+/* Hero */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: -5rem; /* Ajuste más moderado */
+}
+
+.icon {
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 2.5rem;
   font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  font-family: 'Arial', sans-serif;
+  animation: colorChange 5s infinite alternate;
+  margin-bottom: 0px;
 }
 
-/* Botón estilizado con bordes redondeados, color elegante y transición */
-.button {
-  width: 250px;
-  padding: 15px;
-  border-radius: 3px;
-  border: none;
-  background-color: #3498db;
+.subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.ctaButton {
+  background: #ff6600;
   color: white;
-  font-size: 1.1rem;
-  font-weight: 600;
+  padding: 12px 25px;
+  font-size: 1rem;
+  border: none;
   cursor: pointer;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: all 0.4s ease-in-out;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
-  margin-bottom: 10px;
+  border-radius: 8px;
+  transition: transform 0.2s ease, background 0.3s ease;
 }
 
-.button:hover {
-  background-color: #2980b9;
-  transform: translateY(-5px);
-  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+.ctaButton:hover {
+  background: #cc5500;
 }
 
-/* Estilos del contenedor del carrusel con bordes redondeados y fondo semi-transparente */
-.carouselContainer {
-  width: 100%;
-  max-width: 900px;
-  margin-top: 40px;
-  background-color: rgba(255, 255, 255, 0.1);
+/* Sección de características */
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 10rem;
+}
+
+/* Tarjetas individuales */
+.feature {
+  background: rgba(255, 255, 255, 0.15); /* Más opacidad para que resalte mejor */
+  backdrop-filter: blur(10px); /* Efecto de desenfoque para más elegancia */
   padding: 20px;
   border-radius: 15px;
-  box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 300px;
+  text-align: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-/* Responsividad para dispositivos móviles */
-@media screen and (max-width: 740px) {
-  .carouselContainer {
-    max-width: 90%;
+.feature:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+.feature h3 {
+  margin-top: 10px;
+  font-size: 1.4rem;
+  color: white;
+}
+
+.feature p {
+  font-size: 1rem;
+  margin-top: 5px;
+  color: #ddd;
+}
+
+/* Ajuste para móviles */
+@media (max-width: 767px) {
+  .hero {
+    margin-top: 3rem; /* Baja un poco la sección en móviles */
+  }
+  
+  .features {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 20px;
+    margin-top: 5rem;
+    width: 90%;
+  }
+}
+
+/* Responsividad */
+@media (min-width: 768px) {
+  .hero {
+    margin-top: 8rem; /* Ajuste para pantallas medianas */
   }
 
-  .label {
-    font-size: 2.5rem;
-    text-align: center;
+  .title {
+    font-size: 3rem;
   }
 
-  .button {
+  .subtitle {
+    font-size: 1.5rem;
+  }
+
+  .ctaButton {
+    font-size: 1.2rem;
+  }
+
+  /* En tablets, las tarjetas se alinean en 2 columnas */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    margin-top: 10rem;
     width: 80%;
-    font-size: 1rem;
   }
 }
+
+@media (min-width: 1024px) {
+  .features {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 columnas en PC */
+    gap: 30px;
+    justify-content: center;
+    width: 80%;
+  }
+
+  .feature {
+    max-width: 280px;
+  }
+}
+
+/* Animación de color */
+@keyframes colorChange {
+  0% {
+    color: white;
+  }
+  50% {
+    color: #ff6600;
+  }
+  100% {
+    color: white;
+  }
+}
+
+
+
+
+

@@ -31,7 +31,7 @@ function ComponentHome() {
           transition={{ duration: 1 }}
         >
           ¡Bienvenido a Estructuras Verticales 
-          e Ingenieros SAS 🏗️!
+          e Ingenieros SAS! 🏗️
         </motion.h1>
 
         <motion.p

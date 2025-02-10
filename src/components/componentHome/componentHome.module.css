@@ -58,8 +58,6 @@
   gap: 20px;
   margin-top: 10rem;
 }
-
-
 .feature {
   background: rgba(255, 255, 255, 0.15); /* Más opacidad para que resalte mejor */
   backdrop-filter: blur(10px); /* Efecto de desenfoque para más elegancia */

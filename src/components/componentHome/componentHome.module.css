@@ -59,7 +59,7 @@
   margin-top: 10rem;
 }
 
-/* Tarjetas individuales */
+
 .feature {
   background: rgba(255, 255, 255, 0.15); /* Más opacidad para que resalte mejor */
   backdrop-filter: blur(10px); /* Efecto de desenfoque para más elegancia */

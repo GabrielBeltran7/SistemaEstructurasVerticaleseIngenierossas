@@ -1,7 +1,8 @@
 import React from "react"; 
 import { motion } from "framer-motion";
 import { FaHardHat, FaBuilding, FaUsers } from "react-icons/fa";
-import styles from "./componentHome.module.css";
+import styles from "./componenthome.module.css";
+
 
 function ComponentHome() {
   return (

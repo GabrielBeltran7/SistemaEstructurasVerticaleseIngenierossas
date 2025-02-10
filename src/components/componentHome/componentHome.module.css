@@ -16,11 +16,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: -5rem; /* Ajuste más moderado */
+  margin-top: 5rem; /* Ajuste más moderado */
 }
 
 .icon {
-  margin-bottom: 20px;
+  margin-top: 50px;
+  margin-bottom: 10px;
 }
 
 .title {
@@ -89,6 +90,9 @@
 @media (max-width: 767px) {
   .hero {
     margin-top: 3rem; /* Baja un poco la sección en móviles */
+  }.icon {
+    margin-top: 120px;
+    margin-bottom: 10px;
   }
   
   .features {

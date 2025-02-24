@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { postCotizacion } from "../../Redux/Actions"; 
+import { postCotizacion, getImagenesPreestablecidasCotizacion } from "../../Redux/Actions"; 
 import UploadImages from "../SubirImagenesCloudonary/UploadImages";
 import styles from "./CotizacionForm.module.css";
 
 const CotizacionForm = () => {
   const dispatch = useDispatch();
+  const imagenesprestablecidas = useSelector((state) => state.imagenesprestablecidas);
   const { nombre, apellidos, email } = useSelector((state) => state.UserProfileByEmail);
   const urlImagen = useSelector((state) => state.urlimagen);
 
@@ -26,13 +27,15 @@ const CotizacionForm = () => {
     imagenes: [],
   };
 
-  // Primero intentamos cargar los datos desde el localStorage
   const savedData = localStorage.getItem("proposalForm");
   const [formData, setFormData] = useState(savedData ? JSON.parse(savedData) : initialState);
-
   const [error, setError] = useState(""); 
+  const [usarImagenesPreestablecidas, setUsarImagenesPreestablecidas] = useState(false);
 
-  // Guardamos los datos en el localStorage cada vez que cambian
+  useEffect(() => {
+    dispatch(getImagenesPreestablecidasCotizacion());
+  }, [dispatch]);
+
   useEffect(() => {
     if (formData !== initialState) {
       localStorage.setItem("proposalForm", JSON.stringify(formData));
@@ -44,12 +47,30 @@ const CotizacionForm = () => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  const handleCheckboxChange = (e) => {
+    const checked = e.target.checked;
+    setUsarImagenesPreestablecidas(checked);
+
+    // Si el usuario marca el checkbox, limpiamos las imágenes subidas manualmente
+    if (checked) {
+      dispatch({ type: "LIMPIAR_IMAGENES_MANUALES" }); // Limpia el estado donde guardas las imágenes manuales
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (urlImagen.length === 0) {
-      setError("Debe seleccionar al menos una imagen.");
-      return; 
+    let imagenesSeleccionadas = [];
+
+    if (usarImagenesPreestablecidas) {
+      imagenesSeleccionadas = imagenesprestablecidas;
+    } else {
+      imagenesSeleccionadas = urlImagen?.map((img) => img?.secure_url) || [];
+    }
+
+    if (imagenesSeleccionadas.length <3) {
+      setError("Debe seleccionar al menos 3 imagenes.");
+      return;
     }
 
     setError("");
@@ -60,17 +81,15 @@ const CotizacionForm = () => {
       ApellidoEmpleado: apellidos || "", 
       EmailEmpledado: email || "",
       estado: "Pendiente",
-      imagenes: urlImagen?.map((img) => img?.secure_url) || [], 
+      imagenes: imagenesSeleccionadas,
     };
 
-    // Enviar los datos a la acción Redux
     dispatch(postCotizacion(formattedData));
-
-    // Limpiar el formulario y eliminar los datos del localStorage después de enviar el formulario
     setFormData(initialState);
     localStorage.removeItem("proposalForm");
   };
 
+  
   return (
     <div className={styles.container}>
       <form onSubmit={handleSubmit} className={styles.form}>
@@ -115,9 +134,26 @@ const CotizacionForm = () => {
         <label className={styles.label}>Valor:
           <input name="monto" type="number" value={formData.monto} onChange={handleChange} required className={styles.input} />
         </label>
-        <label>
-          <UploadImages />
-        </label>
+        
+        {/* Checkbox para imágenes preestablecidas */}
+        <div className={styles.checkboxContainer}>
+          <input 
+            type="checkbox" 
+            id="usarPreestablecidas" 
+            checked={usarImagenesPreestablecidas} 
+            onChange={handleCheckboxChange} 
+          />
+          <label htmlFor="usarPreestablecidas" className={styles.checkboxLabel}>
+            Usar imágenes preestablecidas
+          </label>
+        </div>
+
+        {/* Subida de imágenes manuales (desactivada si el checkbox está marcado) */}
+        {!usarImagenesPreestablecidas && (
+          <label>
+            <UploadImages />
+          </label>
+        )}
         {error && <p className={styles.error}>{error}</p>}
         <button type="submit" className={styles.button}>Generar Cotización</button>
       </form>

@@ -1,8 +1,44 @@
 /* eslint-disable no-unused-vars */
-import { GET_ALLUSER, GET_USER_BY_EMAIL, GET_ALL_COTIZACION, GET_COTIZACION_SUCCESS, POTS_URL_IMAGEN, UPDATE_COTIZACION_SUCCESS, RESET_REPORT_COTIZACIONES} from "./ActionsTypes";
+import { GET_ALLUSER,GET_IMAGENES__PRESTABLECIDASCOTIZACION, GET_USER_BY_EMAIL, GET_ALL_COTIZACION, GET_COTIZACION_SUCCESS, POTS_URL_IMAGEN, UPDATE_COTIZACION_SUCCESS, RESET_REPORT_COTIZACIONES} from "./ActionsTypes";
 import { db } from "../../api/firebase/FirebaseConfig/FirebaseConfig";
 import { addDoc, collection, getDocs, updateDoc, doc, query, limit, where, orderBy, runTransaction  } from 'firebase/firestore';
 import Swal from "sweetalert2";
+
+
+export const getImagenesPreestablecidasCotizacion = () => {
+  return async (dispatch) => {
+    try {
+      const userCollection = collection(db, "ImagenesPreestablecidasCotizacion");
+      const q = query(userCollection, limit(100));
+      const querySnapshot = await getDocs(q);
+      
+      // Array para almacenar solo las URLs de las imágenes
+      const imagenesPreestablecidas = [];
+
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        // Extraer solo las URLs y agregarlas al array
+        if (data.imagen1) imagenesPreestablecidas.push(data.imagen1);
+        if (data.imagen2) imagenesPreestablecidas.push(data.imagen2);
+        if (data.imagen3) imagenesPreestablecidas.push(data.imagen3);
+      });
+
+      dispatch({
+        type: GET_IMAGENES__PRESTABLECIDASCOTIZACION,
+        payload: imagenesPreestablecidas, // ✅ Ahora es un array de strings con URLs
+      });
+
+    } catch (error) {
+      console.error("Error al obtener los datos:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error al obtener los datos",
+        timerProgressBar: true,
+        timer: 3500,
+      });
+    }
+  };
+};
 
 
 
@@ -283,6 +319,8 @@ export const getFilterporFecha = (inputfilter) => {
     }
   };
 };
+
+
 
 
 export const getReportCotizaciones = () => {

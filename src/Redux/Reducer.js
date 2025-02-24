@@ -6,7 +6,8 @@ import {
   POTS_URL_IMAGEN,
   UPDATE_COTIZACION_SUCCESS,
   GET_COTIZACION_SUCCESS,
-  RESET_REPORT_COTIZACIONES // <-- Importar la nueva acción
+  RESET_REPORT_COTIZACIONES, // <-- Importar la nueva acción
+  GET_IMAGENES__PRESTABLECIDASCOTIZACION
 } from "./ActionsTypes";
 
 let inicialState = {
@@ -16,12 +17,21 @@ let inicialState = {
   reportecotizaciones: [],
   updatedDataCotizacion: [],
   cotizacionNumero: [],
+  imagenesprestablecidas:[]
 };
 
 const rootReducer = (state = inicialState, action) => {
   switch (action.type) {
     case RESET_STATE:
       return inicialState;
+
+
+ case GET_IMAGENES__PRESTABLECIDASCOTIZACION:
+        return {
+          ...state,
+          imagenesprestablecidas: action.payload, // Se vacía el estado temporalmente
+        };
+
 
     case RESET_REPORT_COTIZACIONES:
       return {

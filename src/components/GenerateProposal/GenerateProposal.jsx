@@ -404,24 +404,28 @@ console.log("imagenes aprobadas", proposalData.imagenesAprobadas)
           src="https://res.cloudinary.com/dby8lelja/image/upload/v1740413620/propuesta%20comercial/diapositiva4_tsgsew.jpg"
         />
       </Page>
-      <Page size="A4" orientation="landscape" style={styles.imagePage}>
+
+      {/* <Page size="A4" orientation="landscape" style={styles.imagePage}>
         <Image
           style={styles.image}
           src="https://res.cloudinary.com/dby8lelja/image/upload/v1738203652/propuesta%20comercial/Diapositiva5_var5s3.png"
         />
-      </Page>
+      </Page> */}
+
       <Page size="A4" orientation="landscape" style={styles.imagePage}>
         <Image
           style={styles.image}
           src="https://res.cloudinary.com/dby8lelja/image/upload/v1738203653/propuesta%20comercial/Diapositiva6_zyceez.png"
         />
       </Page>
-      <Page size="A4" orientation="landscape" style={styles.imagePage}>
+
+      {/* <Page size="A4" orientation="landscape" style={styles.imagePage}>
         <Image
           style={styles.image}
           src="https://res.cloudinary.com/dby8lelja/image/upload/v1738203654/propuesta%20comercial/Diapositiva7_nehuwl.png"
         />
-      </Page>
+      </Page> */}
+
       <Page size="A4" orientation="landscape" style={styles.imagePage}>
         <Image
           style={styles.image}

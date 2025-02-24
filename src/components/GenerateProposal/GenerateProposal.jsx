@@ -401,7 +401,7 @@ console.log("imagenes aprobadas", proposalData.imagenesAprobadas)
       <Page size="A4" orientation="landscape" style={styles.imagePage}>
         <Image
           style={styles.image}
-          src="https://res.cloudinary.com/dby8lelja/image/upload/v1738203651/propuesta%20comercial/Diapositiva4_t0jg5m.png"
+          src="https://res.cloudinary.com/dby8lelja/image/upload/v1740413620/propuesta%20comercial/diapositiva4_tsgsew.jpg"
         />
       </Page>
       <Page size="A4" orientation="landscape" style={styles.imagePage}>

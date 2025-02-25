@@ -172,7 +172,7 @@ const UploadImages = () => {
   return (
     <Card className={styles.cardContainer}>
       <CardContent>
-        <h2 className={styles.cardTitle}>Subir un Máximo de 8 Imágenes</h2>
+        <h2 className={styles.cardTitle}>Subir un Minimo de 3 o un Máximo de 8 Imágenes</h2>
         <div className={styles.inputContainer}>
           <input
             type="file"
@@ -207,7 +207,7 @@ const UploadImages = () => {
           ))}
         </div>
         <div className={styles.buttonGroup}>
-          <CustomButton onClick={handleUpload} disabled={uploading || images.length === 0}>
+          <CustomButton onClick={handleUpload} disabled={uploading || images.length < 3}>
             {uploading ? "Subiendo..." : "Guardar Imágenes en la Base de Datos"}
           </CustomButton>
           <CustomButton onClick={handleRemoveAllImages} disabled={images.length === 0}>

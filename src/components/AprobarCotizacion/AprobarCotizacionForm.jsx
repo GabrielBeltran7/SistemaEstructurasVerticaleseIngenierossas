@@ -65,11 +65,21 @@ const AprobarCotizacionForm = () => {
     }
   }, [id, dispatch]);
 
+
+
+
   useEffect(() => {
     if (Cotizacion) {
-      setFormData(Cotizacion);
+      setFormData({
+        ...Cotizacion,
+        LugardeEjecucion: `${Cotizacion.CompañiadelCliente}, ${ Cotizacion.DirecciondelCliente}`, // Concatenamos dirección + empresa
+      });
     }
   }, [Cotizacion]);
+  
+
+
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -102,8 +112,12 @@ const AprobarCotizacionForm = () => {
       console.error("Error al actualizar:", err);
     }
   };
+  
+
+
   const fields = [
     { label: "Nombre Empresa", name: "CompañiadelCliente", required: true },
+    { label: "Lugar de Ejecución", name: "LugardeEjecucion", required: true, type: "textarea" }, // Se mantiene en el formulario
     { label: "Nombre del Representante Legal", name: "NombredeCliente", required: true },
     { label: "Dirección del Cliente", name: "DirecciondelCliente", required: true },
     { label: "Celular del Cliente", name: "CelulardelCliente", required: true, type: "number" },
@@ -112,10 +126,10 @@ const AprobarCotizacionForm = () => {
     { label: "Referencia", name: "referencia", required: true },
     { label: "Objetivo de la Propuesta", name: "objetivo", required: true, type: "textarea" },
     { label: "Actividades a Desarrollar", name: "DetalledelServicio", required: false, type: "textarea" },
-    { label: "Lugar de Ejecución", name: "LugardeEjecucion", required: true, type: "textarea" },
     { label: "Plazo de Ejecución", name: "Plazodeejecucion", required: true, type: "textarea" },
     { label: "Valor", name: "monto", required: true, type: "number" },
   ];
+  
 
   return (
     <div className={styles.container}>
@@ -240,4 +254,3 @@ const AprobarCotizacionForm = () => {
 };
 
 export default AprobarCotizacionForm;
-

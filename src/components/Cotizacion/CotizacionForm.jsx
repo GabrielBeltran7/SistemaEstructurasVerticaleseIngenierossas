@@ -73,7 +73,7 @@ const CotizacionForm = () => {
     if (checked) {
       setFormData((prevData) => ({
         ...prevData,
-        referencia: "Acompañamiento Entrega Areas COmunez",
+        referencia: "Acompañamiento Entrega Areas Comunez",
         objetivo: "Acompañamiento Entrega de Áreas Comunes Teniendo en cuenta normatividad vigente.",
         DetalledelServicio: `Acompañamiento legal especializado en propiedad horizontal para recibir áreas comunes y revisión de normatividad de ley 675 de 2001  
 Revisión de planos estructurales arquitectónicos y estudio de suelos

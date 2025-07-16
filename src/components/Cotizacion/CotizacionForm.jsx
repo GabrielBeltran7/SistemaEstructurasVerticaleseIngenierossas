@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { postCotizacion, getImagenesPreestablecidasCotizacion } from "../../Redux/Actions"; 
@@ -32,6 +31,7 @@ const CotizacionForm = () => {
   const [formData, setFormData] = useState(savedData ? JSON.parse(savedData) : initialState);
   const [error, setError] = useState(""); 
   const [usarImagenesPreestablecidas, setUsarImagenesPreestablecidas] = useState(false);
+  const [reciboZonasComunes, setReciboZonasComunes] = useState(false);
 
   useEffect(() => {
     dispatch(getImagenesPreestablecidasCotizacion());
@@ -45,16 +45,57 @@ const CotizacionForm = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
+
+    setFormData((prevData) => {
+      if (name === "CompañiadelCliente") {
+        return {
+          ...prevData,
+          CompañiadelCliente: value,
+          LugardeEjecucion: value,
+        };
+      }
+      return { ...prevData, [name]: value };
+    });
   };
 
   const handleCheckboxChange = (e) => {
     const checked = e.target.checked;
     setUsarImagenesPreestablecidas(checked);
-
-    // Si el usuario marca el checkbox, limpiamos las imágenes subidas manualmente
     if (checked) {
-      dispatch({ type: "LIMPIAR_IMAGENES_MANUALES" }); // Limpia el estado donde guardas las imágenes manuales
+      dispatch({ type: "LIMPIAR_IMAGENES_MANUALES" });
+    }
+  };
+
+  const handleReciboCheckboxChange = (e) => {
+    const checked = e.target.checked;
+    setReciboZonasComunes(checked);
+
+    if (checked) {
+      setFormData((prevData) => ({
+        ...prevData,
+        referencia: "Acompañamiento Entrega Areas COmunez",
+        objetivo: "Acompañamiento Entrega de Áreas Comunes Teniendo en cuenta normatividad vigente.",
+        DetalledelServicio: `Acompañamiento legal especializado en propiedad horizontal para recibir áreas comunes y revisión de normatividad de ley 675 de 2001  
+Revisión de planos estructurales arquitectónicos y estudio de suelos
+Revisión de cumplimiento de la norma nsr10 en los diseños estructurales
+Comparativo de licencia de construcción con entrega física final
+Evaluación de equipos esenciales 
+Evaluación de estado de áreas comunales 
+Revisión de malos procesos constructivos 
+Evaluación y pruebas fiscas de red contra incendio y cumplimiento de norma 
+Entrega de informes técnicos con evidencia fotográfica y justificación sobre los hallazgos
+Entrega de garantías de equipos y archivo del mismo inventariado.
+Acompañamiento a la administración y consejo de administración hasta la entrega final de la propiedad horizontal.`,
+        Plazodeejecucion: "30 dias",
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        referencia: "",
+        objetivo: "",
+        DetalledelServicio: "",
+        Plazodeejecucion: "",
+      }));
     }
   };
 
@@ -69,7 +110,7 @@ const CotizacionForm = () => {
       imagenesSeleccionadas = urlImagen?.map((img) => img?.secure_url) || [];
     }
 
-    if (imagenesSeleccionadas.length <3) {
+    if (imagenesSeleccionadas.length < 3) {
       setError("Debe seleccionar al menos 3 imagenes.");
       return;
     }
@@ -88,9 +129,10 @@ const CotizacionForm = () => {
     dispatch(postCotizacion(formattedData));
     setFormData(initialState);
     localStorage.removeItem("proposalForm");
+    setReciboZonasComunes(false);
+    setUsarImagenesPreestablecidas(false);
   };
 
-  
   return (
     <div className={styles.container}>
       <form onSubmit={handleSubmit} className={styles.form}>
@@ -117,6 +159,19 @@ const CotizacionForm = () => {
         <label className={styles.label}>Ciudad del Cliente:
           <input type="text" name="CiudaddelCliente" value={formData.CiudaddelCliente} onChange={handleChange} required className={styles.input} />
         </label>
+          {/* Checkbox Recibo Zonas Comunes */}
+        <div className={styles.checkboxContainer}>
+          <input 
+            type="checkbox" 
+            id="reciboZonasComunes" 
+            checked={reciboZonasComunes} 
+            onChange={handleReciboCheckboxChange}
+          />
+          <label htmlFor="reciboZonasComunes" className={styles.checkboxLabel}>
+            Recibo de zonas comunes
+          </label>
+        </div>
+
         <label className={styles.label}>Referencia:
           <textarea name="referencia" value={formData.referencia} onChange={handleChange} required className={styles.input} />
         </label>
@@ -127,7 +182,7 @@ const CotizacionForm = () => {
           <textarea name="DetalledelServicio" value={formData.DetalledelServicio} onChange={handleChange} required className={styles.textarea} />
         </label>
         <label className={styles.label}>Lugar de Ejecucion:
-          <textarea name="LugardeEjecucion" value={formData.CompañiadelCliente} onChange={handleChange} required className={styles.textarea} />
+          <textarea name="LugardeEjecucion" value={formData.LugardeEjecucion} onChange={handleChange} required className={styles.textarea} disabled />
         </label>
         <label className={styles.label}>Plazo de Ejecución:
           <textarea name="Plazodeejecucion" value={formData.Plazodeejecucion} onChange={handleChange} required className={styles.textarea} />
@@ -135,8 +190,9 @@ const CotizacionForm = () => {
         <label className={styles.label}>Valor:
           <input name="monto" type="number" value={formData.monto} onChange={handleChange} required className={styles.input} />
         </label>
-        
-        {/* Checkbox para imágenes preestablecidas */}
+
+      
+        {/* Checkbox Imágenes Preestablecidas */}
         <div className={styles.checkboxContainer}>
           <input 
             type="checkbox" 
@@ -149,12 +205,13 @@ const CotizacionForm = () => {
           </label>
         </div>
 
-        {/* Subida de imágenes manuales (desactivada si el checkbox está marcado) */}
+        {/* Upload manual si no usa imágenes preestablecidas */}
         {!usarImagenesPreestablecidas && (
           <label>
             <UploadImages />
           </label>
         )}
+
         {error && <p className={styles.error}>{error}</p>}
         <button type="submit" className={styles.button}>Generar Cotización</button>
       </form>
@@ -163,3 +220,4 @@ const CotizacionForm = () => {
 };
 
 export default CotizacionForm;
+
